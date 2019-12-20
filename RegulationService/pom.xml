@@ -41,6 +41,11 @@
 			<artifactId>spring-web</artifactId>
 			<version>5.2.0.RELEASE</version>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.11.632</version>
+		</dependency>
+	</dependencies>
 
 </project>
