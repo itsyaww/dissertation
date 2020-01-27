@@ -30,6 +30,7 @@ import UserProfile from "./views/UserProfile/UserProfile.js";
 import TableList from "./views/TableList/TableList.js";
 import Typography from "./views/Typography/Typography.js";
 import Icons from "./views/Icons/Icons.js";
+import Input from "./views/Input/Input.js";
 import Maps from "./views/Maps/Maps.js";
 import NotificationsPage from "./views/Notifications/Notifications.js";
 
@@ -67,6 +68,13 @@ const dashboardRoutes = [
         name: "Icons",
         icon: BubbleChart,
         component: Icons,
+        layout: "/admin"
+    },
+    {
+        path: "/input",
+        name: "Input",
+        icon: LibraryBooks,
+        component: Input,
         layout: "/admin"
     },
     {
