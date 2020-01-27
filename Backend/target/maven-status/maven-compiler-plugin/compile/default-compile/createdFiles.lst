@@ -1,0 +1,4 @@
+backend/Controller/RegulationController.class
+backend/Application.class
+backend/Repository/RegulationRepository.class
+backend/Model/Regulation.class
