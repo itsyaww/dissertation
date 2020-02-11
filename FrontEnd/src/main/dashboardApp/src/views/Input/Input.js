@@ -11,12 +11,10 @@ import CustomInput from "../../components/CustomInput/CustomInput.js";
 import Button from "../../components/CustomButtons/Button.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
-import CardAvatar from "../../components/Card/CardAvatar.js";
+
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 
-import avatar from "../../assets/img/faces/marc.jpg";
-import {DropzoneArea} from "material-ui-dropzone";
 import FileUpload from "../../components/FileUpload/FileUpload";
 
 const styles = {
@@ -40,7 +38,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function Input(){
+export default function Input(props){
     const classes = useStyles();
     return(<div>
         <GridContainer>
@@ -51,12 +49,10 @@ export default function Input(){
                         <p className={classes.cardCategoryWhite}>Upload regulation PDF documents</p>
                     </CardHeader>
                     <CardBody>
+
                         <GridContainer>
                             <GridItem xs={12} sm={12} md={5}>
-                                <Button color="primary">Choose Files</Button>
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={5}>
-                                <FileUpload></FileUpload>
+                                <FileUpload setFieldValue={props.setFieldValue}/>
                             </GridItem>
                         </GridContainer>
                         <GridContainer>
@@ -84,7 +80,7 @@ export default function Input(){
                         </GridContainer>
                     </CardBody>
                     <CardFooter>
-                        <Button color="primary">Submit Files</Button>
+                        <Button onClick={props.handleSubmit} color="primary">Submit Files</Button>
                     </CardFooter>
                 </Card>
             </GridItem>

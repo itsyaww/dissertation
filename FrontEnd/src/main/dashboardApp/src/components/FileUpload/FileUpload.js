@@ -5,14 +5,9 @@ class FileUpload extends Component{
 
     constructor(props){
         super(props);
-        this.state = {
-            files: []
-        };
     }
     handleChange(files){
-        this.setState({
-            files: files
-        });
+        this.props.setFieldValue("files", files)
     }
     render(){
         return (

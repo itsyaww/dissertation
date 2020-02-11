@@ -33,6 +33,7 @@ import Icons from "./views/Icons/Icons.js";
 import Input from "./views/Input/Input.js";
 import Maps from "./views/Maps/Maps.js";
 import NotificationsPage from "./views/Notifications/Notifications.js";
+import FormikHOC from "./views/Input/Formik.jsx";
 
 const dashboardRoutes = [
     {
@@ -74,7 +75,7 @@ const dashboardRoutes = [
         path: "/input",
         name: "Input",
         icon: LibraryBooks,
-        component: Input,
+        component: FormikHOC,
         layout: "/admin"
     },
     {
