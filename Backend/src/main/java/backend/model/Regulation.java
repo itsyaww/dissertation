@@ -15,12 +15,6 @@ public class Regulation {
     @Id @GeneratedValue
     private Long regulationID;
 
-   /* @Property("regulator")
-    private String supervisoryBody;
-
-    @Property("country")
-    private String supervisoryCountry; TODO MOVE THIS TO MODULE.*/
-
    @Property("title")
    private String regulationTitle;
 
@@ -30,9 +24,6 @@ public class Regulation {
     @Property("date_goLive")
     private LocalDateTime goLive;
 
-    @Property("module")
-    private Module module;
-
     @Property("topic")
     private String topic;
 
@@ -40,11 +31,10 @@ public class Regulation {
     private Boolean atRisk;
 
     @PersistenceConstructor
-    public Regulation(Long regulationID, LocalDateTime dateIssued, LocalDateTime goLive, Module module, String topic, Boolean atRisk) {
+    public Regulation(Long regulationID, LocalDateTime dateIssued, LocalDateTime goLive, String topic, Boolean atRisk) {
         this.regulationID = regulationID;
         this.dateIssued = dateIssued;
         this.goLive = goLive;
-        this.module = module;
         this.topic = topic;
         this.atRisk = atRisk;
     }
@@ -57,21 +47,13 @@ public class Regulation {
         this.regulationID = regulationID;
     }
 
-    /*public String getSupervisoryBody() {
-        return supervisoryBody;
+    public String getRegulationTitle() {
+        return regulationTitle;
     }
 
-    public void setSupervisoryBody(String supervisoryBody) {
-        this.supervisoryBody = supervisoryBody;
+    public void setRegulationTitle(String regulationTitle) {
+        this.regulationTitle = regulationTitle;
     }
-
-    public String getSupervisoryCountry() {
-        return supervisoryCountry;
-    }
-
-    public void setSupervisoryCountry(String supervisoryCountry) {
-        this.supervisoryCountry = supervisoryCountry;
-    }*/
 
     public LocalDateTime getDateIssued() {
         return dateIssued;
@@ -87,14 +69,6 @@ public class Regulation {
 
     public void setGoLive(LocalDateTime goLive) {
         this.goLive = goLive;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
     }
 
     public String getTopic() {

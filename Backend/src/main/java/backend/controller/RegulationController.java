@@ -29,7 +29,7 @@ public class RegulationController {
     @PostMapping(value = "/new", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@RequestBody Regulation newRegulation){
 
-        System.out.println(newRegulation.getRegulationID().toString() + " " + newRegulation.getSupervisoryBody() + " " + newRegulation.getSupervisoryCountry());
+        System.out.println(newRegulation.getRegulationID().toString() + " " + newRegulation.getTopic() + " " + newRegulation.getAtRisk().toString());
         Regulation createdRegulation = regulationRepository.save(newRegulation);
         if (createdRegulation == null) {
             return ResponseEntity.notFound().build();
@@ -69,15 +69,8 @@ public class RegulationController {
     }
 
     @GetMapping(value = { "", "/" }, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllRegulation() {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin",
-                "*");
-        responseHeaders.set("Access-Control-Allow-Methods",
-                "GET");
-        responseHeaders.set("Access-Control-Allow-Headers",
-                "Content-Type, Authorization, Content-Length, X-Requested-With");
-        return new ResponseEntity<>(regulationRepository.findAll(), responseHeaders, HttpStatus.OK);
+    public ResponseEntity<?> getAllRegulations() {
+        return new ResponseEntity<>(regulationRepository.findAll(), HttpStatus.OK);
     }
 
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -85,8 +78,8 @@ public class RegulationController {
 
         if(regulationRepository.existsById(id)) {
             regulationRepository.findById(id).map(existingRegulation -> {
-                        existingRegulation.setSupervisoryBody(updatedRegulation.getSupervisoryBody());
-                        existingRegulation.setSupervisoryCountry(updatedRegulation.getSupervisoryCountry());
+                        existingRegulation.setTopic(updatedRegulation.getTopic());
+                        existingRegulation.setAtRisk(updatedRegulation.getAtRisk());
 
                         return regulationRepository.save(existingRegulation);
                     });
