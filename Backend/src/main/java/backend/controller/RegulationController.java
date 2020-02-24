@@ -29,7 +29,7 @@ public class RegulationController {
     @PostMapping(value = "/new", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@RequestBody Regulation newRegulation){
 
-        System.out.println(newRegulation.getRegulationID().toString() + " " + newRegulation.getTopic() + " " + newRegulation.getAtRisk().toString());
+        System.out.println(newRegulation.getRegulationID().toString() + " " + " " + newRegulation.getAtRisk().toString());
         Regulation createdRegulation = regulationRepository.save(newRegulation);
         if (createdRegulation == null) {
             return ResponseEntity.notFound().build();
@@ -39,16 +39,8 @@ public class RegulationController {
                     .buildAndExpand(createdRegulation.getRegulationID())
                     .toUri();
 
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("Access-Control-Allow-Origin",
-                    "*");
-            responseHeaders.set("Access-Control-Allow-Methods",
-                    "POST");
-            responseHeaders.set("Access-Control-Allow-Headers",
-                    "Content-Type, Authorization, Content-Length, X-Requested-With");
-
             return ResponseEntity.created(uri)
-                    .headers(responseHeaders)
+                    .headers(addResponseHeaders())
                     .body(createdRegulation);
         }
     }
@@ -78,7 +70,6 @@ public class RegulationController {
 
         if(regulationRepository.existsById(id)) {
             regulationRepository.findById(id).map(existingRegulation -> {
-                        existingRegulation.setTopic(updatedRegulation.getTopic());
                         existingRegulation.setAtRisk(updatedRegulation.getAtRisk());
 
                         return regulationRepository.save(existingRegulation);
@@ -101,38 +92,30 @@ public class RegulationController {
     //WEB OPERATIONS FOR UI
     @GetMapping(value = { "/incoming/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> countIncomingRegulationAPI(@PathVariable Long id) {
-        /*HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin",
-                "*");
-        responseHeaders.set("Access-Control-Allow-Methods",
-                "GET");
-        responseHeaders.set("Access-Control-Allow-Headers",
-                "Content-Type, Authorization, Content-Length, X-Requested-With");*/
-        return new ResponseEntity<>(regulationRepository.countDistinctByRegulationID(id),/* responseHeaders,*/ HttpStatus.OK);
+        return new ResponseEntity<>(regulationRepository.countDistinctByRegulationID(id),/* addResponseHeaders,*/ HttpStatus.OK);
     }
 
     @GetMapping(value = { "/no-supervisory-bodies/{supervisoryBody}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> countSupervisoryBodiesAPI(@PathVariable String supervisoryBody) {
-        /*HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin",
-                "*");
-        responseHeaders.set("Access-Control-Allow-Methods",
-                "GET");
-        responseHeaders.set("Access-Control-Allow-Headers",
-                "Content-Type, Authorization, Content-Length, X-Requested-With");*/
-        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryBody(supervisoryBody),/* responseHeaders,*/ HttpStatus.OK);
+        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryBody(supervisoryBody),/* addResponseHeaders(),*/ HttpStatus.OK);
     }
 
     @GetMapping(value = { "/go-live/{country}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> countGoLiveRegulationAPI(@PathVariable String country) {
-        /*HttpHeaders responseHeaders = new HttpHeaders();
+
+        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryCountry(country),/* addResponseHeaders(),*/ HttpStatus.OK);
+    }
+
+    private HttpHeaders addResponseHeaders()
+    {
+        HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Origin",
                 "*");
         responseHeaders.set("Access-Control-Allow-Methods",
                 "GET");
         responseHeaders.set("Access-Control-Allow-Headers",
-                "Content-Type, Authorization, Content-Length, X-Requested-With");*/
-        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryCountry(country),/* responseHeaders,*/ HttpStatus.OK);
-    }
+                "Content-Type, Authorization, Content-Length, X-Requested-With");
 
+        return responseHeaders;
+    }
 }

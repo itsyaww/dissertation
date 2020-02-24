@@ -28,16 +28,16 @@ public class Team {
     private Double riskLevel;
 
     @Relationship(type="SUBSCRIBES_TO", direction=OUTGOING)
-    private List<Regulation> regulationList;
+    private List<Module> modules;
 
     @PersistenceConstructor
-    public Team(Long teamID, String teamName, String teamPrimaryManager, String teamSecondaryManager, Double riskLevel, List<Regulation> regulationList) {
+    public Team(Long teamID, String teamName, String teamPrimaryManager, String teamSecondaryManager, Double riskLevel, List<Module> modules) {
         this.teamID = teamID;
         this.teamName = teamName;
         this.teamPrimaryManager = teamPrimaryManager;
         this.teamSecondaryManager = teamSecondaryManager;
         this.riskLevel = riskLevel;
-        this.regulationList = regulationList;
+        this.modules = modules;
     }
 
     public Long getTeamID() {
@@ -80,11 +80,27 @@ public class Team {
         this.riskLevel = riskLevel;
     }
 
-    public List<Regulation> getRegulationList() {
-        return regulationList;
+    public List<Module> getModules() {
+        return modules;
     }
 
-    public void setRegulationList(List<Regulation> regulationList) {
-        this.regulationList = regulationList;
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
+    }
+
+    public Boolean addModule(Module module)
+    {
+        return modules.add(module);
+    }
+
+    public void removeModule(String moduleCode)
+    {
+        modules.forEach(module -> {
+            if(module.getModuleCode().equals(moduleCode))
+            {
+                System.out.println("Removing Module" + moduleCode + " from list");
+                modules.remove(module);
+            }
+        });
     }
 }

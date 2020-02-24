@@ -41,7 +41,7 @@ public class PublisherConfig {
     }
 
     @Bean
-    public Producer Producer() {
-        return new Producer();
+    public RegulationPublisher Producer() {
+        return new RegulationPublisher();
     }
 }

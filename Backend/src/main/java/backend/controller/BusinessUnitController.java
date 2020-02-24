@@ -1,6 +1,7 @@
 package backend.controller;
 
 import backend.model.BusinessUnit;
+import backend.model.Team;
 import backend.repository.BusinessUnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Optional;
 
+@CrossOrigin("http://localhost:3000/")
+@RestController
+@RequestMapping("/business-unit")
 public class BusinessUnitController {
     
     @Autowired
@@ -83,5 +87,29 @@ public class BusinessUnitController {
         if (businessUnitRepository.existsById(id)) {
             businessUnitRepository.deleteById(id);
         }
+    }
+
+    @PutMapping(value = "/add/team", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addTeam(@RequestBody Long buId, @RequestBody Team team)
+    {
+
+        businessUnitRepository.findById(buId).ifPresent(businessUnit -> {
+            businessUnit.addTeam(team);
+            businessUnitRepository.save(businessUnit);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "{buId}/delete/team/{teamId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> removeTeam(@PathVariable Long buId, @PathVariable Long teamId)
+    {
+
+        businessUnitRepository.findById(buId).ifPresent(businessUnit -> {
+            businessUnit.removeTeam(teamId);
+            businessUnitRepository.save(businessUnit);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -1,0 +1,343 @@
+{
+  "firm": {
+    "firmName": "Goldman Sachs International",
+    "division": [
+      {
+        "divisionID": 0,
+        "divisionName": "Operations",
+        "businessUnits": [
+          {
+            "buID": 0,
+            "buName": "Reporting",
+            "buSeniorLead": "Soleye Odogwa",
+            "buComplianceOfficer": "Samuel Brazier",
+            "teams": [
+              {
+                "teamID": 0,
+                "teamName": "Client Assets",
+                "teamPrimaryManager": " Fred Watson",
+                "teamSecondaryManager": "Jade Akiawowo",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "CASS",
+                    "moduleName": "Client Assets Sourcebook",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "teamID": 0,
+                "teamName": "Trade Reporting",
+                "teamPrimaryManager": " Ellie Mayweather",
+                "teamSecondaryManager": "David Chappell",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "COBS",
+                    "moduleName": "Conduct of Business Sourcebook",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "divisionID": 0,
+        "divisionName": "Engineering",
+        "businessUnits": [
+          {
+            "buID": 0,
+            "buName": "Core Engineering",
+            "buSeniorLead": "Stephen Archard",
+            "buComplianceOfficer": "Sean Gooch",
+            "teams": [
+              {
+                "teamID": 0,
+                "teamName": "Storage",
+                "teamPrimaryManager": "Adenife Sotoyimbo",
+                "teamSecondaryManager": "Paul Oppong",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "ENG",
+                    "moduleName": "Engineering Standards",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "teamID": 0,
+                "teamName": "Databases",
+                "teamPrimaryManager": " Yaw Mensah",
+                "teamSecondaryManager": "Edward Kyei",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "ENG",
+                    "moduleName": "Engineering Sourcebook",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "divisionID": 0,
+        "divisionName": "Legal",
+        "businessUnits": [
+          {
+            "buID": 0,
+            "buName": "Reporting",
+            "buSeniorLead": "Soleye Odogwa",
+            "buComplianceOfficer": "Samuel Brazier",
+            "teams": [
+              {
+                "teamID": 0,
+                "teamName": "Client Assets",
+                "teamPrimaryManager": " Fred Watson",
+                "teamSecondaryManager": "Jade Akiawowo",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "CASS",
+                    "moduleName": "Client Assets Sourcebook",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "teamID": 0,
+                "teamName": "Trade Reporting",
+                "teamPrimaryManager": " Ellie Mayweather",
+                "teamSecondaryManager": "David Chappell",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "COBS",
+                    "moduleName": "Conduct of Business Sourcebook",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "divisionID": 0,
+        "divisionName": "GSAM",
+        "businessUnits": [
+          {
+            "buID": 0,
+            "buName": "Reporting",
+            "buSeniorLead": "Soleye Odogwa",
+            "buComplianceOfficer": "Samuel Brazier",
+            "teams": [
+              {
+                "teamID": 0,
+                "teamName": "Client Assets",
+                "teamPrimaryManager": " Fred Watson",
+                "teamSecondaryManager": "Jade Akiawowo",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "CASS",
+                    "moduleName": "Client Assets Sourcebook",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "teamID": 0,
+                "teamName": "Trade Reporting",
+                "teamPrimaryManager": " Ellie Mayweather",
+                "teamSecondaryManager": "David Chappell",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "COBS",
+                    "moduleName": "Conduct of Business Sourcebook",
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom",
+                    "regulations": [
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      },
+                      {
+                        "regulationID": 0,
+                        "regulationTitle": "",
+                        "dateIssued": "",
+                        "goLive": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

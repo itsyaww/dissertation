@@ -1,5 +1,6 @@
 package backend.controller;
 
+import backend.model.Module;
 import backend.model.Team;
 import backend.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Optional;
 
+@CrossOrigin("http://localhost:3000/")
+@RestController
+@RequestMapping("/team")
 public class TeamController {
     @Autowired
     private final TeamRepository teamRepository;
@@ -64,7 +68,7 @@ public class TeamController {
 
                 existingTeam.setTeamID(updatedTeam.getTeamID());
                 existingTeam.setTeamName(updatedTeam.getTeamName());
-                existingTeam.setRegulationList(updatedTeam.getRegulationList());
+                existingTeam.setModules(updatedTeam.getModules());
                 existingTeam.setRiskLevel(updatedTeam.getRiskLevel());
                 existingTeam.setTeamPrimaryManager(updatedTeam.getTeamPrimaryManager());
                 existingTeam.setTeamSecondaryManager(updatedTeam.getTeamSecondaryManager());
@@ -83,5 +87,29 @@ public class TeamController {
         if (teamRepository.existsById(id)) {
             teamRepository.deleteById(id);
         }
+    }
+
+    @PutMapping(value = "/add/module", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addBusinessUnit(@RequestBody Long teamId, @RequestBody Module module)
+    {
+
+        teamRepository.findById(teamId).ifPresent(team -> {
+            team.addModule(module);
+            teamRepository.save(team);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "{teamId}/delete/module/{moduleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> removeBusinessUnit(@PathVariable Long teamId, @PathVariable String moduleCode)
+    {
+
+        teamRepository.findById(teamId).ifPresent(team -> {
+            team.removeModule(moduleCode);
+            teamRepository.save(team);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

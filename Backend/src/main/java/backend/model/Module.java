@@ -76,4 +76,20 @@ public class Module {
     public void setSupervisoryCountry(String supervisoryCountry) {
         this.supervisoryCountry = supervisoryCountry;
     }
+
+    public Boolean addRegulation(Regulation regulation)
+    {
+        return regulations.add(regulation);
+    }
+
+    public void removeRegulation(Long regulationId)
+    {
+        regulations.forEach(regulation -> {
+            if(regulation.getRegulationID().equals(regulationId))
+            {
+                System.out.println("Removing regulation " + regulation.toString() + " from list");
+                regulations.remove(regulation);
+            }
+        });
+    }
 }

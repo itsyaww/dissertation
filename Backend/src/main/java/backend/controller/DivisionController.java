@@ -1,5 +1,6 @@
 package backend.controller;
 
+import backend.model.BusinessUnit;
 import backend.model.Division;
 import backend.repository.DivisionRepository;
 import backend.repository.DivisionRepository;
@@ -85,6 +86,30 @@ public class DivisionController {
         if (divisionRepository.existsById(id)) {
             divisionRepository.deleteById(id);
         }
+    }
+
+    @PutMapping(value = "/add/business-unit", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addBusinessUnit(@RequestBody Long divisionId, @RequestBody BusinessUnit businessUnit)
+    {
+
+        divisionRepository.findById(divisionId).ifPresent(firm -> {
+            firm.addBusinessUnit(businessUnit);
+            divisionRepository.save(firm);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "{divisionId}/delete/business-unit/{buId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> removeBusinessUnit(@PathVariable Long divisionId, @PathVariable Long buId)
+    {
+
+        divisionRepository.findById(divisionId).ifPresent(firm -> {
+            firm.removeBusinessUnit(buId);
+            divisionRepository.save(firm);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
     

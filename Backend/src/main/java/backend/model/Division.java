@@ -51,4 +51,20 @@ public class Division {
     public void setBusinessUnits(List<BusinessUnit> businessUnits) {
         this.businessUnits = businessUnits;
     }
+
+    public Boolean addBusinessUnit(BusinessUnit division)
+    {
+        return businessUnits.add(division);
+    }
+
+    public void removeBusinessUnit(Long buId)
+    {
+        businessUnits.forEach(businessUnit -> {
+            if(businessUnit.getBuID().equals(buId))
+            {
+                System.out.println("Removing Business Unit " + buId.toString() + " from list");
+                businessUnits.remove(businessUnit);
+            }
+        });
+    }
 }

@@ -1,6 +1,7 @@
 package backend.controller;
 
 import backend.model.Module;
+import backend.model.Regulation;
 import backend.repository.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Optional;
 
+@CrossOrigin("http://localhost:3000/")
+@RestController
+@RequestMapping("/module")
 public class ModuleController {
     @Autowired
     private final ModuleRepository moduleRepository;
@@ -81,5 +85,29 @@ public class ModuleController {
         if (moduleRepository.existsById(id)) {
             moduleRepository.deleteById(id);
         }
+    }
+
+    @PutMapping(value = "/add/regulation", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addBusinessUnit(@RequestBody String moduleCode, @RequestBody Regulation regulation)
+    {
+
+        moduleRepository.findById(moduleCode).ifPresent(module -> {
+            module.addRegulation(regulation);
+            moduleRepository.save(module);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "{moduleCode}/delete/regulation/{regulationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> removeBusinessUnit(@PathVariable String moduleCode, @PathVariable Long regulationId)
+    {
+
+        moduleRepository.findById(moduleCode).ifPresent(module -> {
+            module.removeRegulation(regulationId);
+            moduleRepository.save(module);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

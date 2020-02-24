@@ -17,12 +17,12 @@ public class Firm {
     private String firmName;
 
     @Relationship(type ="HAS",direction =OUTGOING)
-    private List<BusinessUnit> businessUnits;
+    private List<Division> divisions;
 
     @PersistenceConstructor
-    public Firm(String firmName, List<BusinessUnit> businessUnits) {
+    public Firm(String firmName, List<Division> divisions) {
         this.firmName = firmName;
-        this.businessUnits = businessUnits;
+        this.divisions = divisions;
     }
 
     public String getFirmName() {
@@ -33,11 +33,27 @@ public class Firm {
         this.firmName = firmName;
     }
 
-    public List<BusinessUnit> getBusinessUnits() {
-        return businessUnits;
+    public List<Division> getDivisions() {
+        return divisions;
     }
 
-    public void setBusinessUnits(List<BusinessUnit> businessUnits) {
-        this.businessUnits = businessUnits;
+    public void setDivisions(List<Division> divisions) {
+        this.divisions = divisions;
+    }
+
+    public Boolean addDivision(Division division)
+    {
+        return divisions.add(division);
+    }
+
+    public void removeDivision(Long divisionId)
+    {
+        divisions.forEach(division -> {
+            if(division.getDivisionID().equals(divisionId))
+            {
+                System.out.println("Removing division " + divisionId.toString() + " from list");
+                divisions.remove(division);
+            }
+        });
     }
 }

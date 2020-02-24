@@ -24,18 +24,14 @@ public class Regulation {
     @Property("date_goLive")
     private LocalDateTime goLive;
 
-    @Property("topic")
-    private String topic;
-
     @Property("atRisk")
     private Boolean atRisk;
 
     @PersistenceConstructor
-    public Regulation(Long regulationID, LocalDateTime dateIssued, LocalDateTime goLive, String topic, Boolean atRisk) {
+    public Regulation(Long regulationID, LocalDateTime dateIssued, LocalDateTime goLive, Boolean atRisk) {
         this.regulationID = regulationID;
         this.dateIssued = dateIssued;
         this.goLive = goLive;
-        this.topic = topic;
         this.atRisk = atRisk;
     }
 
@@ -69,14 +65,6 @@ public class Regulation {
 
     public void setGoLive(LocalDateTime goLive) {
         this.goLive = goLive;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
     }
 
     public Boolean getAtRisk() {

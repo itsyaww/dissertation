@@ -1,5 +1,7 @@
 package backend.controller;
 
+import backend.model.BusinessUnit;
+import backend.model.Division;
 import backend.model.Firm;
 import backend.repository.FirmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Optional;
 
+@CrossOrigin("http://localhost:3000/")
+@RestController
+@RequestMapping("/firm")
 public class FirmController {
     @Autowired
     private final FirmRepository firmRepository;
@@ -48,7 +52,7 @@ public class FirmController {
         if (firmRepository.existsById(id)) {
             firmRepository.findById(id).map(existingFirm -> {
 
-                existingFirm.setBusinessUnits(updatedFirm.getBusinessUnits());
+                existingFirm.setDivisions(updatedFirm.getDivisions());
                 existingFirm.setFirmName(updatedFirm.getFirmName());
 
                 return firmRepository.save(existingFirm);
@@ -64,5 +68,29 @@ public class FirmController {
         if (firmRepository.existsById(id)) {
             firmRepository.deleteById(id);
         }
+    }
+
+    @PutMapping(value = "/add/division", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addDivision(@RequestBody String firmId, @RequestBody Division division)
+    {
+
+        firmRepository.findById(firmId).ifPresent(firm -> {
+            firm.addDivision(division);
+            firmRepository.save(firm);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping(value = "{firmId}/delete/division/{buId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> removeDivision(@PathVariable String firmId, @PathVariable Long buId)
+    {
+
+        firmRepository.findById(firmId).ifPresent(firm -> {
+            firm.removeDivision(buId);
+            firmRepository.save(firm);
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

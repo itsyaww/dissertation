@@ -85,6 +85,22 @@ public class BusinessUnit {
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
+
+    public Boolean addTeam(Team team)
+    {
+        return teams.add(team);
+    }
+
+    public void removeTeam(Long teamId)
+    {
+        teams.forEach(team -> {
+            if(team.getTeamID().equals(teamId))
+            {
+                System.out.println("Removing Team " + teamId.toString() + " from list");
+                teams.remove(team);
+            }
+        });
+    }
 }
 
 //FIRM -> DIVISION -> BUSINESS UNIT -> TEAM -> MODULES -> REGULATIONS
