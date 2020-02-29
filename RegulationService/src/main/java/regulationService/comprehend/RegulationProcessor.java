@@ -6,17 +6,22 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.comprehend.AmazonComprehend;
 import com.amazonaws.services.comprehend.AmazonComprehendClientBuilder;
 import com.amazonaws.services.comprehend.model.*;
+import regulationService.model.Regulation;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegulationProcessor {
 
     private static final Regions REGION = Regions.EU_WEST_2;
-
+    private final String FCA_REGULATION_REGEX = "(FCA \\d{4}\\/\\d*)\\s*([ \\w\\/.,’()“”:;-]*)\\s*([ \\w\\/.,’()“”:;-]*)[\\s\\w\\/.,’()“”:;-]*Commencement[\\s\\w\\/.,’()“”:;-]+?(\\d{1,2}.*\\d{4})[\\s\\w\\/.,’()“”:;-]*By order of the Board\\s+(\\d{1,2}.*\\d{4})";
+    
     private static final String LANGUAGE_CODE = "en";
     private static final String ENDPOINT_NAME = "categorise-regulation-module";
     private static final String CLASSIFIER_ARN = "arn:aws:comprehend:eu-west-2:172506724237:document-classifier/Regulation-Shortened";
 
     private static String endpointArn = "arn:aws:comprehend:eu-west-2:172506724237:document-classifier-endpoint/categorise-regulation-module";
-    private static String text = getExampleText();
+    private static String exampleText = getExampleText();
 
     private AmazonComprehend comprehendClient;
 
@@ -56,13 +61,15 @@ public class RegulationProcessor {
                 "28 March 2019 ";
     }
 
-    public void runClient(){
+    public static void main(String[] param){
 
-        this.comprehendClient = setUpComprehendClient();
+        RegulationProcessor processor = new RegulationProcessor();
+
         //detectLanguage(comprehendClient);
         //detectEntities(comprehendClient);
         //detectKeyPhrases(comprehendClient);
-        classifyRegulation(text);
+
+        processor.classifyRegulation(exampleText);
     }
 
     private AmazonComprehend setUpComprehendClient(){
@@ -78,7 +85,7 @@ public class RegulationProcessor {
     {
         // Call detectDominantLanguage API
         System.out.println("Calling DetectDominantLanguage");
-        DetectDominantLanguageRequest detectDominantLanguageRequest = new DetectDominantLanguageRequest().withText(text);
+        DetectDominantLanguageRequest detectDominantLanguageRequest = new DetectDominantLanguageRequest().withText(exampleText);
         DetectDominantLanguageResult detectDominantLanguageResult = this.comprehendClient.detectDominantLanguage(detectDominantLanguageRequest);
         detectDominantLanguageResult.getLanguages().forEach(System.out::println);
         System.out.println("Calling DetectDominantLanguage\n");
@@ -89,7 +96,7 @@ public class RegulationProcessor {
     {
         // Call detectEntities API
         System.out.println("Calling DetectEntities");
-        DetectEntitiesRequest detectEntitiesRequest = new DetectEntitiesRequest().withText(text)
+        DetectEntitiesRequest detectEntitiesRequest = new DetectEntitiesRequest().withText(exampleText)
                 .withLanguageCode(LANGUAGE_CODE);
         DetectEntitiesResult detectEntitiesResult  = this.comprehendClient.detectEntities(detectEntitiesRequest);
         detectEntitiesResult.getEntities().forEach(System.out::println);
@@ -100,7 +107,7 @@ public class RegulationProcessor {
     {
         // Call detectKeyPhrases API
         System.out.println("Calling DetectKeyPhrases");
-        DetectKeyPhrasesRequest detectKeyPhrasesRequest = new DetectKeyPhrasesRequest().withText(text)
+        DetectKeyPhrasesRequest detectKeyPhrasesRequest = new DetectKeyPhrasesRequest().withText(exampleText)
                 .withLanguageCode(LANGUAGE_CODE);
         DetectKeyPhrasesResult detectKeyPhrasesResult = this.comprehendClient.detectKeyPhrases(detectKeyPhrasesRequest);
         detectKeyPhrasesResult.getKeyPhrases().forEach(System.out::println);
@@ -108,7 +115,8 @@ public class RegulationProcessor {
     }
 
     private DocumentClass classifyRegulation(String text) {
-        endpointArn = getOrCreateEndpoint();
+        //endpointArn = getOrCreateEndpoint();
+        //endpointArn = createEndpoint();
 
         // Call classifyDocument API
         System.out.println("Classifying Regulation");
@@ -133,22 +141,26 @@ public class RegulationProcessor {
             return describeEndpointRequest.getEndpointArn();
         }
         else{
-            System.out.println("Creating endpoint: " + ENDPOINT_NAME);
-
-            CreateEndpointRequest createEndpointRequest = new CreateEndpointRequest()
-                    .withEndpointName(ENDPOINT_NAME)
-                    .withModelArn(CLASSIFIER_ARN)
-                    .withDesiredInferenceUnits(1);
-
-            CreateEndpointResult createEndpointResult = this.comprehendClient.createEndpoint(createEndpointRequest);
-
-            if (createEndpointResult.getSdkHttpMetadata().getHttpStatusCode() != 200)
-            {
-                throw new RuntimeException("Endpoint creation failed. Cannot proceed");
-            }
-
-            return createEndpointResult.getEndpointArn();
+            return createEndpoint();
         }
+    }
+
+    private String createEndpoint()
+    {
+        System.out.println("Creating endpoint: " + ENDPOINT_NAME);
+
+        CreateEndpointRequest createEndpointRequest = new CreateEndpointRequest()
+                .withEndpointName(ENDPOINT_NAME)
+                .withModelArn(CLASSIFIER_ARN)
+                .withDesiredInferenceUnits(1);
+
+        CreateEndpointResult createEndpointResult = this.comprehendClient.createEndpoint(createEndpointRequest);
+
+        if (createEndpointResult.getSdkHttpMetadata().getHttpStatusCode() != 200)
+        {
+            throw new RuntimeException("Endpoint creation failed. Cannot proceed");
+        }
+        return createEndpointResult.getEndpointArn();
     }
 
     private void deleteEndpoint(AmazonComprehend client, String endpointArn)
@@ -163,11 +175,80 @@ public class RegulationProcessor {
             }
     }
 
-    public String enrichRegulation(String fileContents) {
+    public Regulation enrichRegulation(String fileContents) {
 
         DocumentClass result = classifyRegulation(fileContents);
+        Regulation regulation = new Regulation();
 
+        String title = extractTitle(fileContents);
+        String code = extractRegCode(fileContents);
+        String goLive = extractGoLiveDate(fileContents);
+        String issueDate = extractRegulatoryIssueDate(fileContents);
 
-        return null;
+        regulation.setDateIssued(issueDate);
+        regulation.setGoLive(goLive);
+        regulation.setRegulationTitle(title);
+        regulation.setRegulationCode(code);
+
+        System.out.println("REGULATION TITLE: " + title);
+        System.out.println("REGULATION CODE: " + code);
+        System.out.println("REGULATION GO LIVE: " + goLive);
+        System.out.println("REGULATION ISSUE DATE: " + issueDate);
+        System.out.println("REGULATION MODULE CODE: " + result.getName() + " CONFIDENCE: " + result.getScore());
+
+        return regulation;
+    }
+
+    private String extractRegulatoryIssueDate(String fileContents) {
+        Pattern pattern = Pattern.compile(FCA_REGULATION_REGEX);
+        Matcher matcher;
+        matcher = pattern.matcher(fileContents);
+        if(matcher.find())
+        {
+            return matcher.group(4);
+        }
+        return "NO MATCH";
+    }
+
+    private String extractGoLiveDate(String fileContents) {
+        Pattern pattern = Pattern.compile(FCA_REGULATION_REGEX);
+        Matcher matcher;
+        matcher = pattern.matcher(fileContents);
+        if(matcher.find())
+        {
+            return matcher.group(5);
+        }
+        return "NO MATCH";
+    }
+
+    private String extractRegCode(String fileContents) {
+        Pattern pattern = Pattern.compile(FCA_REGULATION_REGEX);
+        Matcher matcher;
+
+        matcher = pattern.matcher(fileContents);
+        if(matcher.find())
+        {
+            return matcher.group(1);
+        }
+        return "NO MATCH";//fileContents.split(System.getProperty("line.separator"))[0];
+
+        //return lines[0]; //First line on any regulation is the regulation code if regex doesn't work
+    }
+
+    private String extractTitle(String fileContents) {
+        Pattern pattern = Pattern.compile(FCA_REGULATION_REGEX);
+        Matcher matcher;
+        matcher = pattern.matcher(fileContents);
+        if(matcher.find())
+        {
+            String titleStart = matcher.group(2);
+            String titleEnd = matcher.group(3); //Check for titles which span multiple lines
+            if (titleEnd.toLowerCase().contains("powers"))
+            {
+                return titleStart;
+            }
+            return titleStart + titleEnd;
+        }
+        return "NO MATCH";//fileContents.split(System.getProperty("line.separator"))[1]; //Second line on any regulation file is the regulation title if regex doesn't work
     }
 }

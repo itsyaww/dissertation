@@ -2,7 +2,8 @@ package regulationService.input;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import regulationService.comprehend.RegulationProcessor;
-import regulationService.publisher.RegulationPublisher;
+import regulationService.model.Regulation;
+import regulationService.kafka.publisher.RegulationPublisher;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -13,9 +14,16 @@ public class RegulationDirectoryMonitor {
 
     @Autowired
     private RegulationPublisher regulationPublisher;
+
     private RegulationFileReader regulationFileReader;
     private RegulationProcessor regulationProcessor;
     private String directory;
+
+    public static void main(String[] param) throws IOException {
+        RegulationDirectoryMonitor monitor = new RegulationDirectoryMonitor("");
+        String text = monitor.regulationFileReader.parseRegulationPDF("/Users/paulfrimpong/Documents/COMPUTER SCIENCE/Year 4/Final Year Project/FinalYearProject/RegulationService/src/main/resources/FCA_2019_83.pdf");
+        Regulation regulation = monitor.regulationProcessor.enrichRegulation(text);
+    }
 
     public RegulationDirectoryMonitor(String directory){
 
@@ -39,7 +47,16 @@ public class RegulationDirectoryMonitor {
 
         WatchKey watchKey;
         while ((watchKey = watchService.take()) != null) {
+
             for (WatchEvent<?> event : watchKey.pollEvents()) {
+                try
+                {
+                    Thread.sleep(1000);
+                }
+                catch(InterruptedException ex)
+                {
+                    Thread.currentThread().interrupt();
+                }
 
                 if (event.kind().equals(ENTRY_CREATE))
                 {
@@ -63,11 +80,11 @@ public class RegulationDirectoryMonitor {
         logEvent(event);
 
         try {
-            String fileContents = regulationFileReader.parseRegulationPDF(event.context().toString());
+            String regulationContent = regulationFileReader.parseRegulationPDF(this.directory + "/" + event.context().toString());
 
-            /*Regulation enrichedRegulation = regulationProcessor.enrichRegulation(fileContents);
+            Regulation enrichedRegulation = regulationProcessor.enrichRegulation(regulationContent);
 
-            regulationPublisher.send(enrichedRegulation);*/
+            regulationPublisher.send(enrichedRegulation);
 
         } catch (IOException e) {
             e.printStackTrace();
