@@ -26,6 +26,12 @@ public class ReceiverConfig {
 
     @Bean
     public Map<String, Object> consumerConfigs() {
+
+        JsonDeserializer<Regulation> deserializer = new JsonDeserializer<>(Regulation.class);
+        deserializer.setRemoveTypeHeaders(false);
+        deserializer.addTrustedPackages("*");
+        deserializer.setUseTypeMapperForKey(true);
+
         Map<String, Object> props = new HashMap<>();
         // list of host:port pairs used for establishing the initial connections to the Kafka cluster
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -62,8 +68,14 @@ public class ReceiverConfig {
 
     @Bean
     public ConsumerFactory<String, Regulation> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+        return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
+                new JsonDeserializer<>(Regulation.class,false));
     }
+
+
+    /*public ConsumerFactory<String, String> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+    }*/
 
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Regulation>> kafkaListenerContainerFactory() {
@@ -74,8 +86,17 @@ public class ReceiverConfig {
         return factory;
     }
 
+    /*@Bean
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory());
+
+        return factory;
+    }*/
+
     @Bean
-    public Receiver receiver() {
-        return new Receiver();
+    public RegulationReceiver receiver() {
+        return new RegulationReceiver();
     }
 }

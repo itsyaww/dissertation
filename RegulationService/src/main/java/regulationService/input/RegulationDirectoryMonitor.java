@@ -1,7 +1,7 @@
 package regulationService.input;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import regulationService.comprehend.RegulationProcessor;
+import regulationService.kafka.consumer.RegulationReceiver;
 import regulationService.model.Regulation;
 import regulationService.kafka.publisher.RegulationPublisher;
 
@@ -12,8 +12,8 @@ import static java.nio.file.StandardWatchEventKinds.*;
 
 public class RegulationDirectoryMonitor {
 
-    @Autowired
     private RegulationPublisher regulationPublisher;
+    private RegulationReceiver receiver;
 
     private RegulationFileReader regulationFileReader;
     private RegulationProcessor regulationProcessor;
@@ -23,6 +23,12 @@ public class RegulationDirectoryMonitor {
         RegulationDirectoryMonitor monitor = new RegulationDirectoryMonitor("");
         String text = monitor.regulationFileReader.parseRegulationPDF("/Users/paulfrimpong/Documents/COMPUTER SCIENCE/Year 4/Final Year Project/FinalYearProject/RegulationService/src/main/resources/FCA_2019_83.pdf");
         Regulation regulation = monitor.regulationProcessor.enrichRegulation(text);
+    }
+
+    public RegulationDirectoryMonitor(String directory, RegulationPublisher publisher)
+    {
+        this(directory);
+        this.regulationPublisher = publisher;
     }
 
     public RegulationDirectoryMonitor(String directory){
@@ -82,10 +88,12 @@ public class RegulationDirectoryMonitor {
         try {
             String regulationContent = regulationFileReader.parseRegulationPDF(this.directory + "/" + event.context().toString());
 
-            Regulation enrichedRegulation = regulationProcessor.enrichRegulation(regulationContent);
+            if(regulationContent != null) //check file content successfully processed
+            {
+                Regulation enrichedRegulation = regulationProcessor.enrichRegulation(regulationContent);
 
-            regulationPublisher.send(enrichedRegulation);
-
+                regulationPublisher.send(enrichedRegulation);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

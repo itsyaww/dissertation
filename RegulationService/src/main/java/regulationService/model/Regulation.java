@@ -125,8 +125,8 @@ public class Regulation {
                 "regulationID=" + regulationID +
                 ", regulationCode='" + regulationCode + '\'' +
                 ", regulationTitle='" + regulationTitle + '\'' +
-                ", dateIssued=" + dateIssued +
-                ", goLive=" + goLive +
+                ", dateIssued='" + dateIssued + '\'' +
+                ", goLive='" + goLive + '\'' +
                 ", atRisk=" + atRisk +
                 '}';
     }

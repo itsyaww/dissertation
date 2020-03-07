@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class RegulationFileReader {
@@ -29,9 +30,15 @@ public class RegulationFileReader {
 
     public String parseRegulationPDF(String fileName) throws IOException
     {
+        if(fileName.contains(".DS_Store")){
+            return null; //Don't process hidden files
+        }
+
         String fileContents = "";
 
-        try (PDDocument document = PDDocument.load(new File(fileName)))
+        File file = new File(fileName);
+
+        try (PDDocument document = PDDocument.load(new FileInputStream(file)))
         {
             AccessPermission ap = document.getCurrentAccessPermission();
             if (!ap.canExtractContent())
@@ -53,11 +60,11 @@ public class RegulationFileReader {
             stripper.setEndPage(pages);
 
             // let the magic happen
-            String text = stripper.getText(document);
+            fileContents = stripper.getText(document);
 
-            System.out.println("TEXT FILE: " + text);
+            System.out.println("TEXT FILE: " + fileContents);
 
-            return text;
+            return fileContents;
         }
     }
 }

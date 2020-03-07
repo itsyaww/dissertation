@@ -5,10 +5,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 import regulationService.model.Regulation;
 
 public class RegulationPublisher {
+
     @Autowired
     private KafkaTemplate<String, Regulation> kafkaTemplate;
 
-    /*public void send(String payload) {
+    /*@Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    public void send(String payload) {
         kafkaTemplate.send("regulation", payload);
     }*/
 

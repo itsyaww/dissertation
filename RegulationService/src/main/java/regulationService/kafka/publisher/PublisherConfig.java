@@ -55,6 +55,16 @@ public class PublisherConfig {
         return new KafkaTemplate<>(producerFactory());
     }
 
+    /*@Bean
+    public ProducerFactory<String, String> producerFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    }
+
+    @Bean
+    public KafkaTemplate<String, String> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
+    }*/
+
     @Bean
     public RegulationPublisher Producer() {
         return new RegulationPublisher();

@@ -74,4 +74,15 @@ public class Regulation {
     public void setAtRisk(Boolean atRisk) {
         this.atRisk = atRisk;
     }
+
+    @Override
+    public String toString() {
+        return "Regulation{" +
+                "regulationID=" + regulationID +
+                ", regulationTitle='" + regulationTitle + '\'' +
+                ", dateIssued=" + dateIssued +
+                ", goLive=" + goLive +
+                ", atRisk=" + atRisk +
+                '}';
+    }
 }
