@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import regulationService.input.RegulationDirectoryMonitor;
 import regulationService.kafka.consumer.RegulationReceiver;
+import regulationService.kafka.publisher.MessagePublisher;
 import regulationService.kafka.publisher.RegulationPublisher;
 import regulationService.storage.StorageProperties;
 import regulationService.storage.StorageService;
@@ -24,6 +25,9 @@ public class ServiceApplication implements CommandLineRunner {
 	RegulationPublisher regulationPublisher;
 
 	@Autowired
+	MessagePublisher messagePublisher;
+
+	@Autowired
 	private RegulationReceiver receiver;
 
 	@Override
@@ -33,7 +37,7 @@ public class ServiceApplication implements CommandLineRunner {
 		//regulationPublisher.send("TESTING REGULATION5");
 		//regulationPublisher.send("TESTING REGULATION6");
 
-		RegulationDirectoryMonitor directoryMonitor = new RegulationDirectoryMonitor("/Users/paulfrimpong/RegulationFiles",regulationPublisher);
+		RegulationDirectoryMonitor directoryMonitor = new RegulationDirectoryMonitor("/Users/paulfrimpong/RegulationFiles",regulationPublisher, messagePublisher);
 		directoryMonitor.monitorDirectory();
 
 		/*new RegulationProcessor().runClient();*/

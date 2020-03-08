@@ -6,6 +6,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.comprehend.AmazonComprehend;
 import com.amazonaws.services.comprehend.AmazonComprehendClientBuilder;
 import com.amazonaws.services.comprehend.model.*;
+import regulationService.model.Message;
 import regulationService.model.Regulation;
 
 import java.util.regex.Matcher;
@@ -197,6 +198,35 @@ public class RegulationProcessor {
         System.out.println("REGULATION MODULE CODE: " + result.getName() + " CONFIDENCE: " + result.getScore());
 
         return regulation;
+    }
+
+    public Message createMessage(String fileContents) {
+
+        DocumentClass result = classifyRegulation(fileContents);
+        Regulation regulation = new Regulation();
+        Message message = new Message();
+
+        String title = extractTitle(fileContents);
+        String code = extractRegCode(fileContents);
+        String goLive = extractGoLiveDate(fileContents);
+        String issueDate = extractRegulatoryIssueDate(fileContents);
+
+        regulation.setDateIssued(issueDate);
+        regulation.setGoLive(goLive);
+        regulation.setRegulationTitle(title);
+        regulation.setRegulationCode(code);
+        regulation.setAtRisk(false);
+
+        message.setModuleCode(result.getName());
+        message.setRegulation(regulation);
+
+        System.out.println("REGULATION TITLE: " + title);
+        System.out.println("REGULATION CODE: " + code);
+        System.out.println("REGULATION GO LIVE: " + goLive);
+        System.out.println("REGULATION ISSUE DATE: " + issueDate);
+        System.out.println("REGULATION MODULE CODE: " + result.getName() + " CONFIDENCE: " + result.getScore());
+
+        return message;
     }
 
     private String extractRegulatoryIssueDate(String fileContents) {

@@ -13,7 +13,7 @@ public interface RegulationRepository extends Neo4jRepository<Regulation, Long> 
 
     Optional<Regulation> countDistinctByRegulationID(Long regulationID);
 
-    Optional<Regulation> countDistinctBySupervisoryBody(String supervisoryBody);
+    /*Optional<Regulation> countDistinctBySupervisoryBody(String supervisoryBody);
 
-    Optional<Regulation> countDistinctBySupervisoryCountry(String supervisoryCountry);
+    Optional<Regulation> countDistinctBySupervisoryCountry(String supervisoryCountry);*/
 }

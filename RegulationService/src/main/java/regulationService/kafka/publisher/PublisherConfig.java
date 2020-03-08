@@ -9,6 +9,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import regulationService.model.Message;
 import regulationService.model.Regulation;
 
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class PublisherConfig {
     public KafkaTemplate<String, Regulation> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+
 
     /*@Bean
     public ProducerFactory<String, String> producerFactory() {

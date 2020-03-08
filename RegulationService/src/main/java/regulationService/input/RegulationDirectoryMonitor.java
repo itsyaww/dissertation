@@ -2,6 +2,8 @@ package regulationService.input;
 
 import regulationService.comprehend.RegulationProcessor;
 import regulationService.kafka.consumer.RegulationReceiver;
+import regulationService.kafka.publisher.MessagePublisher;
+import regulationService.model.Message;
 import regulationService.model.Regulation;
 import regulationService.kafka.publisher.RegulationPublisher;
 
@@ -13,6 +15,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class RegulationDirectoryMonitor {
 
     private RegulationPublisher regulationPublisher;
+    private MessagePublisher messagePublisher;
     private RegulationReceiver receiver;
 
     private RegulationFileReader regulationFileReader;
@@ -29,6 +32,13 @@ public class RegulationDirectoryMonitor {
     {
         this(directory);
         this.regulationPublisher = publisher;
+    }
+
+    public RegulationDirectoryMonitor(String directory, RegulationPublisher publisher, MessagePublisher mPublisher)
+    {
+        this(directory);
+        this.regulationPublisher = publisher;
+        this.messagePublisher = mPublisher;
     }
 
     public RegulationDirectoryMonitor(String directory){
@@ -90,9 +100,11 @@ public class RegulationDirectoryMonitor {
 
             if(regulationContent != null) //check file content successfully processed
             {
-                Regulation enrichedRegulation = regulationProcessor.enrichRegulation(regulationContent);
+                //Regulation enrichedRegulation = regulationProcessor.enrichRegulation(regulationContent);
+                Message enrichedMessage = regulationProcessor.createMessage(regulationContent);
 
-                regulationPublisher.send(enrichedRegulation);
+                //regulationPublisher.send(enrichedRegulation);
+                messagePublisher.send(enrichedMessage);
             }
         } catch (IOException e) {
             e.printStackTrace();

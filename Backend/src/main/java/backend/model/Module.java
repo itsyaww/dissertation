@@ -13,7 +13,7 @@ import static org.neo4j.springframework.data.core.schema.Relationship.Direction.
 @Node
 public class Module {
 
-    @Id
+    @Id @Property
     private String moduleCode;
 
     @Property("name")
@@ -36,6 +36,8 @@ public class Module {
         this.supervisoryBody = supervisoryBody;
         this.supervisoryCountry = supervisoryCountry;
     }
+
+    public Module(){}
 
     public String getModuleCode() {
         return moduleCode;

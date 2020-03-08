@@ -95,16 +95,16 @@ public class RegulationController {
         return new ResponseEntity<>(regulationRepository.countDistinctByRegulationID(id),/* addResponseHeaders,*/ HttpStatus.OK);
     }
 
-    @GetMapping(value = { "/no-supervisory-bodies/{supervisoryBody}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    /*@GetMapping(value = { "/no-supervisory-bodies/{supervisoryBody}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> countSupervisoryBodiesAPI(@PathVariable String supervisoryBody) {
-        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryBody(supervisoryBody),/* addResponseHeaders(),*/ HttpStatus.OK);
+        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryBody(supervisoryBody),*//* addResponseHeaders(),*//* HttpStatus.OK);
     }
 
     @GetMapping(value = { "/go-live/{country}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> countGoLiveRegulationAPI(@PathVariable String country) {
 
-        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryCountry(country),/* addResponseHeaders(),*/ HttpStatus.OK);
-    }
+        return new ResponseEntity<>(regulationRepository.countDistinctBySupervisoryCountry(country),*//* addResponseHeaders(),*//* HttpStatus.OK);
+    }*/
 
     private HttpHeaders addResponseHeaders()
     {
