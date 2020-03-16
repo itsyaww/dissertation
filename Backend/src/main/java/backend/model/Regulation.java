@@ -7,8 +7,6 @@ import org.neo4j.springframework.data.core.schema.Property;
 
 import org.springframework.data.annotation.PersistenceConstructor;
 
-import java.time.LocalDateTime;
-
 @Node
 public class Regulation {
 
@@ -86,7 +84,7 @@ public class Regulation {
                 '}';
     }*/
 
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long regulationID;
 
     @Property
@@ -105,14 +103,23 @@ public class Regulation {
 
     private LocalDate goLive;*/
 
-    @Id @Property
+    @Property
     private Boolean atRisk;
+
+    public Regulation(Regulation regulation) {
+        this.regulationID = null;
+        this.regulationCode = regulation.regulationCode;
+        this.regulationTitle = regulation.regulationTitle;
+        this.dateIssued = regulation.dateIssued;
+        this.goLive = regulation.goLive;
+        this.atRisk = regulation.atRisk;
+    }
 
     public Regulation(){}
 
     @PersistenceConstructor
-    public Regulation(Long regulationID, String regulationCode, String regulationTitle, String dateIssued, String goLive, Boolean atRisk) {
-        this.regulationID = regulationID;
+    public Regulation(String regulationCode, String regulationTitle, String dateIssued, String goLive, Boolean atRisk) {
+        this.regulationID = null;
         this.regulationCode = regulationCode;
         this.regulationTitle = regulationTitle;
         this.dateIssued = dateIssued;

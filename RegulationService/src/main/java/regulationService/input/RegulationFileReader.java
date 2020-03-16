@@ -11,7 +11,7 @@ import java.io.IOException;
 public class RegulationFileReader {
 
     private final int START_PAGE = 1;
-    private final int MAX_NUM_PAGES = 3; //maximum number of pages to parse/analyse
+    private final int MAX_NUM_PAGES = 2; //maximum number of pages to parse/analyse
 
     public static void main(String[] args) throws IOException {
         //For testing purposes

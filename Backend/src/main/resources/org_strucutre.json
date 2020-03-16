@@ -1,252 +1,63 @@
-{
-  "firm": {
+[
+  {
     "firmName": "Goldman Sachs International",
-    "division": [
+    "divisions": [
       {
-        "divisionID": 0,
-        "divisionName": "Operations",
-        "businessUnits": [
-          {
-            "buID": 0,
-            "buName": "Reporting",
-            "buSeniorLead": "Soleye Odogwa",
-            "buComplianceOfficer": "Samuel Brazier",
-            "teams": [
-              {
-                "teamID": 0,
-                "teamName": "Client Assets",
-                "teamPrimaryManager": " Fred Watson",
-                "teamSecondaryManager": "Jade Akiawowo",
-                "riskLevel": 0.0,
-                "modules": [
-                  {
-                    "moduleCode": "CASS",
-                    "moduleName": "Client Assets Sourcebook",
-                    "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
-                    "regulations": [
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "teamID": 0,
-                "teamName": "Trade Reporting",
-                "teamPrimaryManager": " Ellie Mayweather",
-                "teamSecondaryManager": "David Chappell",
-                "riskLevel": 0.0,
-                "modules": [
-                  {
-                    "moduleCode": "COBS",
-                    "moduleName": "Conduct of Business Sourcebook",
-                    "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
-                    "regulations": [
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "divisionID": 0,
-        "divisionName": "Engineering",
-        "businessUnits": [
-          {
-            "buID": 0,
-            "buName": "Core Engineering",
-            "buSeniorLead": "Stephen Archard",
-            "buComplianceOfficer": "Sean Gooch",
-            "teams": [
-              {
-                "teamID": 0,
-                "teamName": "Storage",
-                "teamPrimaryManager": "Adenife Sotoyimbo",
-                "teamSecondaryManager": "Paul Oppong",
-                "riskLevel": 0.0,
-                "modules": [
-                  {
-                    "moduleCode": "ENG",
-                    "moduleName": "Engineering Standards",
-                    "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
-                    "regulations": [
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "teamID": 0,
-                "teamName": "Databases",
-                "teamPrimaryManager": " Yaw Mensah",
-                "teamSecondaryManager": "Edward Kyei",
-                "riskLevel": 0.0,
-                "modules": [
-                  {
-                    "moduleCode": "ENG",
-                    "moduleName": "Engineering Sourcebook",
-                    "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
-                    "regulations": [
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "divisionID": 0,
+        "divisionID": 179,
         "divisionName": "Legal",
         "businessUnits": [
           {
-            "buID": 0,
-            "buName": "Reporting",
-            "buSeniorLead": "Soleye Odogwa",
-            "buComplianceOfficer": "Samuel Brazier",
+            "buID": 70,
+            "buName": "Client Relations",
+            "buSeniorLead": "Phillip Adeneyi",
+            "buComplianceOfficer": "Thomas Mensah",
             "teams": [
               {
-                "teamID": 0,
-                "teamName": "Client Assets",
-                "teamPrimaryManager": " Fred Watson",
-                "teamSecondaryManager": "Jade Akiawowo",
+                "teamID": 72,
+                "teamName": "Dispute Resolution",
+                "teamPrimaryManager": "Naomi Walker",
+                "teamSecondaryManager": "Stephen Glad",
                 "riskLevel": 0.0,
                 "modules": [
                   {
-                    "moduleCode": "CASS",
-                    "moduleName": "Client Assets Sourcebook",
+                    "moduleCode": "DISP",
+                    "moduleName": "Dispute Resolution",
+                    "regulations": [],
                     "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
-                    "regulations": [
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      }
-                    ]
+                    "supervisoryCountry": "United Kingdom"
                   }
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "buID": 77,
+            "buName": "Client Charges",
+            "buSeniorLead": "Ayomikumn",
+            "buComplianceOfficer": "Adediran",
+            "teams": [
               {
-                "teamID": 0,
-                "teamName": "Trade Reporting",
-                "teamPrimaryManager": " Ellie Mayweather",
-                "teamSecondaryManager": "David Chappell",
+                "teamID": 79,
+                "teamName": "Fees",
+                "teamPrimaryManager": "Ismail Ahmed",
+                "teamSecondaryManager": "Nayyum Khalil",
                 "riskLevel": 0.0,
                 "modules": [
                   {
-                    "moduleCode": "COBS",
-                    "moduleName": "Conduct of Business Sourcebook",
-                    "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
+                    "moduleCode": "FEES",
+                    "moduleName": "Fees Manual",
                     "regulations": [
                       {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
+                        "regulationID": 49,
+                        "regulationCode": "FCA 2019/10",
+                        "regulationTitle": "FEES (MISCELLANEOUS AMENDMENTS) (No 13) INSTRUMENT 2019  ",
+                        "dateIssued": "1 April 2019",
+                        "goLive": "28 February 2019",
+                        "atRisk": false
                       }
-                    ]
+                    ],
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom"
                   }
                 ]
               }
@@ -255,82 +66,133 @@
         ]
       },
       {
-        "divisionID": 0,
-        "divisionName": "GSAM",
+        "divisionID": 178,
+        "divisionName": "Human Capital Management",
         "businessUnits": [
           {
-            "buID": 0,
-            "buName": "Reporting",
-            "buSeniorLead": "Soleye Odogwa",
-            "buComplianceOfficer": "Samuel Brazier",
+            "buID": 71,
+            "buName": "Training & Skills",
+            "buSeniorLead": "Sarah Lotts",
+            "buComplianceOfficer": "Morenike Ashimolowo",
             "teams": [
               {
-                "teamID": 0,
+                "teamID": 73,
+                "teamName": "Staff Compentence",
+                "teamPrimaryManager": "Eddie Shaw",
+                "teamSecondaryManager": "Molly McCarthy",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "TC",
+                    "moduleName": "Training & Compentence Sourcebook",
+                    "regulations": [
+                      {
+                        "regulationID": 85,
+                        "regulationCode": "FSA 2012/72",
+                        "regulationTitle": "TRAINING AND COMPETENCE SOURCEBOOK (QUALIFICATIONS AMENDMENTS NO 7) INSTRUMENT 2012 ",
+                        "dateIssued": "31 December 2012",
+                        "goLive": "13 December 2012",
+                        "atRisk": false
+                      }
+                    ],
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "divisionID": 175,
+        "divisionName": "Operations",
+        "businessUnits": [
+          {
+            "buID": 76,
+            "buName": "Invoicing",
+            "buSeniorLead": "Daniel Phillips",
+            "buComplianceOfficer": "Suzanna Mayo",
+            "teams": [
+              {
+                "teamID": 78,
+                "teamName": "Client Invoicing",
+                "teamPrimaryManager": "Danielle Nkrumah",
+                "teamSecondaryManager": "Hope Grodd",
+                "riskLevel": 0.0,
+                "modules": [
+                  {
+                    "moduleCode": "FEES",
+                    "moduleName": "Fees Manual",
+                    "regulations": [
+                      {
+                        "regulationID": 49,
+                        "regulationCode": "FCA 2019/10",
+                        "regulationTitle": "FEES (MISCELLANEOUS AMENDMENTS) (No 13) INSTRUMENT 2019  ",
+                        "dateIssued": "1 April 2019",
+                        "goLive": "28 February 2019",
+                        "atRisk": false
+                      }
+                    ],
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "buID": 223,
+            "buName": "New Regulations",
+            "buSeniorLead": "Mary Roberts",
+            "buComplianceOfficer": "Edwin Dossoo",
+            "teams": [
+              {
+                "teamID": 176,
                 "teamName": "Client Assets",
-                "teamPrimaryManager": " Fred Watson",
-                "teamSecondaryManager": "Jade Akiawowo",
+                "teamPrimaryManager": "Soleye Brazier",
+                "teamSecondaryManager": "Holly Smith",
                 "riskLevel": 0.0,
                 "modules": [
                   {
                     "moduleCode": "CASS",
                     "moduleName": "Client Assets Sourcebook",
-                    "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
                     "regulations": [
                       {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
+                        "regulationID": 84,
+                        "regulationCode": "FSA 2010/59",
+                        "regulationTitle": "CLIENT ASSETS SOURCEBOOK (TITLE TRANSFER) (AMENDMENT) INSTRUMENT 2010 ",
+                        "dateIssued": "1 December 2010",
+                        "goLive": "10 November 2010",
+                        "atRisk": false
                       }
-                    ]
-                  }
-                ]
-              },
-              {
-                "teamID": 0,
-                "teamName": "Trade Reporting",
-                "teamPrimaryManager": " Ellie Mayweather",
-                "teamSecondaryManager": "David Chappell",
-                "riskLevel": 0.0,
-                "modules": [
+                    ],
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom"
+                  },
                   {
                     "moduleCode": "COBS",
                     "moduleName": "Conduct of Business Sourcebook",
-                    "supervisoryBody": "FCA",
-                    "supervisoryCountry": "United Kingdom",
                     "regulations": [
                       {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
+                        "regulationID": 47,
+                        "regulationCode": "FCA 2019/83",
+                        "regulationTitle": "CONDUCT OF BUSINESS SOURCEBOOK (INVESTMENT PATHWAYS) INSTRUMENT 2019 ",
+                        "dateIssued": "1 August 2020",
+                        "goLive": "25 July 2019",
+                        "atRisk": false
                       },
                       {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
-                      },
-                      {
-                        "regulationID": 0,
-                        "regulationTitle": "",
-                        "dateIssued": "",
-                        "goLive": ""
+                        "regulationID": 46,
+                        "regulationCode": "FCA 2020/2",
+                        "regulationTitle": "PENSION SCHEMES (DISCLOSURE OF TRANSACTION COSTS AND ADMINISTRATION CHARGES) (AMENDMENT) INSTRUMENT 2020 ",
+                        "dateIssued": "1 April 2020",
+                        "goLive": "30 January 2020",
+                        "atRisk": false
                       }
-                    ]
+                    ],
+                    "supervisoryBody": "FCA",
+                    "supervisoryCountry": "United Kingdom"
                   }
                 ]
               }
@@ -340,4 +202,4 @@
       }
     ]
   }
-}
+]

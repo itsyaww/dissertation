@@ -1,7 +1,5 @@
 package backend.controller;
 
-import backend.consumer.RegulationReceiver;
-import backend.model.Message;
 import backend.model.Module;
 import backend.model.Regulation;
 import backend.repository.ModuleRepository;
@@ -9,13 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
@@ -35,11 +30,11 @@ public class ModuleController {
 
     //KAFKA OPERATIONS
 
-    public CountDownLatch getLatch() {
+    /*public CountDownLatch getLatch() {
         return latch;
-    }
+    }*/
 
-    @KafkaListener(topics = "regulation")
+    /*@KafkaListener(topics = "regulation")
     public void receive(Regulation regulation) {
         System.out.println(regulation.toString());
         //processRegulation(regulation);
@@ -55,51 +50,24 @@ public class ModuleController {
 
     private void processMessage(Message message) {
 
-        /*if(moduleRepository.existsById(message.getModuleCode())) {
-            Optional<Module> module = moduleRepository.findById(message.getModuleCode());
-            module.get().addRegulation(message.getRegulation());
-        }else
-        {*/
-        /*List<Regulation> regulations;
-        String moduleCode = message.getModuleCode();
-
-        Module module = moduleRepository.findById(moduleCode).orElse(new Module());
-        if (module.getRegulations()==null || module.getModuleCode()==null)
-        {
-            regulations = new ArrayList<>();
-            module.setModuleCode(message.getModuleCode());
-            module.setModuleName("Test");
-            module.setSupervisoryCountry("United Kingdom");
-            module.setSupervisoryBody("FCA");
-            module.setRegulations(regulations);
-        }
-        else
-        {
-            regulations = module.getRegulations();
-        }*/
-
         String moduleCode = message.getModuleCode();
 
         if(moduleRepository.existsById(moduleCode)) {
-            moduleRepository.findById(moduleCode).map(existingModule -> {
-                existingModule.getRegulations().add(message.getRegulation());
-                return moduleRepository.save(existingModule);
-            });
+            Module module = moduleRepository.findByModuleCode(moduleCode).get();
+            module.addRegulation(message.getRegulation());
+            moduleRepository.save(module);
         }else
         {
             Module module = new Module();
-            List<Regulation> regulations = new ArrayList<>();
             module.setModuleCode(message.getModuleCode());
             module.setModuleName("Test");
             module.setSupervisoryCountry("United Kingdom");
             module.setSupervisoryBody("FCA");
-            module.setRegulations(regulations);
+            module.addRegulation(message.getRegulation());
             moduleRepository.save(module);
         }
 
-
-        //}
-    }
+    }*/
 
     //CRUD OPERATIONS
     @PostMapping(value = "/new", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -165,7 +133,7 @@ public class ModuleController {
     }
 
     @PutMapping(value = "/add/regulation", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?>  addBusinessUnit(@RequestBody String moduleCode, @RequestBody Regulation regulation)
+    public ResponseEntity<?>  addRegulation(@RequestBody String moduleCode, @RequestBody Regulation regulation)
     {
 
         moduleRepository.findById(moduleCode).ifPresent(module -> {
@@ -177,7 +145,7 @@ public class ModuleController {
     }
 
     @DeleteMapping(value = "{moduleCode}/delete/regulation/{regulationId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> removeBusinessUnit(@PathVariable String moduleCode, @PathVariable Long regulationId)
+    public ResponseEntity<?> removeRegulation(@PathVariable String moduleCode, @PathVariable Long regulationId)
     {
 
         moduleRepository.findById(moduleCode).ifPresent(module -> {
@@ -187,6 +155,5 @@ public class ModuleController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
 
 }

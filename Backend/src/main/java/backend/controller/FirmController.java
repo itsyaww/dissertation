@@ -1,6 +1,5 @@
 package backend.controller;
 
-import backend.model.BusinessUnit;
 import backend.model.Division;
 import backend.model.Firm;
 import backend.repository.FirmRepository;
@@ -71,15 +70,17 @@ public class FirmController {
     }
 
     @PutMapping(value = "/add/division", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?>  addDivision(@RequestBody String firmId, @RequestBody Division division)
+    public ResponseEntity<?>  addDivision(@RequestBody Division division)
     {
-
-        firmRepository.findById(firmId).ifPresent(firm -> {
+        String firmId = "Goldman Sachs International";
+        if(firmRepository.findByFirmName(firmId).isPresent()){
+            Firm firm = firmRepository.findByFirmName(firmId).get();
             firm.addDivision(division);
             firmRepository.save(firm);
-        });
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @DeleteMapping(value = "{firmId}/delete/division/{buId}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,7 +1,10 @@
 package backend.controller;
 
+import backend.model.Handbook;
 import backend.model.Module;
 import backend.model.Team;
+import backend.repository.HandbookRepository;
+import backend.repository.ModuleRepository;
 import backend.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +23,12 @@ public class TeamController {
     @Autowired
     private final TeamRepository teamRepository;
 
-    public TeamController(TeamRepository teamRepository) {
+    @Autowired
+    private final HandbookRepository handbookRepository;
+
+    public TeamController(TeamRepository teamRepository, HandbookRepository handbookRepository) {
         this.teamRepository = teamRepository;
+        this.handbookRepository = handbookRepository;
     }
 
     //CRUD OPERATIONS
@@ -89,12 +96,19 @@ public class TeamController {
         }
     }
 
-    @PutMapping(value = "/add/module", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?>  addBusinessUnit(@RequestBody Long teamId, @RequestBody Module module)
+    @PutMapping(value = "{teamId}/add/module", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addModule(@PathVariable String teamId, @RequestBody Module module)
     {
+        teamRepository.findByTeamName(teamId).ifPresent(team -> {
 
-        teamRepository.findById(teamId).ifPresent(team -> {
+            module.setModuleName(module.getModuleName()); //hardcoded
+            module.setSupervisoryCountry("United Kingdom"); //hardcoded
+            module.setSupervisoryBody("FCA"); //hardcoded
+
             team.addModule(module);
+            Handbook handbook = handbookRepository.findById("FCA Handbook").get();
+            handbook.addModule(module);
+            handbookRepository.save(handbook);
             teamRepository.save(team);
         });
 
@@ -102,7 +116,7 @@ public class TeamController {
     }
 
     @DeleteMapping(value = "{teamId}/delete/module/{moduleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> removeBusinessUnit(@PathVariable Long teamId, @PathVariable String moduleCode)
+    public ResponseEntity<?> removeModule(@PathVariable Long teamId, @PathVariable String moduleCode)
     {
 
         teamRepository.findById(teamId).ifPresent(team -> {

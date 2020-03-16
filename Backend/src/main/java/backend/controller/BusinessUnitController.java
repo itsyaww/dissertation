@@ -69,7 +69,6 @@ public class BusinessUnitController {
 
                 existingBusinessUnit.setBuID(existingBusinessUnit.getBuID());
                 existingBusinessUnit.setBuComplianceOfficer(existingBusinessUnit.getBuComplianceOfficer());
-                existingBusinessUnit.setBuDivision(existingBusinessUnit.getBuDivision());
                 existingBusinessUnit.setBuName(existingBusinessUnit.getBuName());
                 existingBusinessUnit.setBuSeniorLead(existingBusinessUnit.getBuSeniorLead());
                 existingBusinessUnit.setTeams(existingBusinessUnit.getTeams());
@@ -89,11 +88,11 @@ public class BusinessUnitController {
         }
     }
 
-    @PutMapping(value = "/add/team", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?>  addTeam(@RequestBody Long buId, @RequestBody Team team)
+    @PutMapping(value = "{businessUnitName}/add/team", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addTeam(@PathVariable String businessUnitName, @RequestBody Team team)
     {
 
-        businessUnitRepository.findById(buId).ifPresent(businessUnit -> {
+        businessUnitRepository.findByBuName(businessUnitName).ifPresent(businessUnit -> {
             businessUnit.addTeam(team);
             businessUnitRepository.save(businessUnit);
         });

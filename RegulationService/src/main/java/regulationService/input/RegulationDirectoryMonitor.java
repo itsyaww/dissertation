@@ -24,8 +24,9 @@ public class RegulationDirectoryMonitor {
 
     public static void main(String[] param) throws IOException {
         RegulationDirectoryMonitor monitor = new RegulationDirectoryMonitor("");
-        String text = monitor.regulationFileReader.parseRegulationPDF("/Users/paulfrimpong/Documents/COMPUTER SCIENCE/Year 4/Final Year Project/FinalYearProject/RegulationService/src/main/resources/FCA_2019_83.pdf");
-        Regulation regulation = monitor.regulationProcessor.enrichRegulation(text);
+        //String text = monitor.regulationFileReader.parseRegulationPDF("/Users/paulfrimpong/Documents/COMPUTER SCIENCE/Year 4/Final Year Project/FinalYearProject/RegulationService/src/main/resources/FCA_2019_83.pdf");
+        String text = monitor.regulationFileReader.parseRegulationPDF("/Users/paulfrimpong/Documents/COMPUTER SCIENCE/Year 4/Final Year Project/FinalYearProject/RegulationService/src/main/resources/FCA_2010_59.pdf");
+        Message message = monitor.regulationProcessor.createMessage(text);
     }
 
     public RegulationDirectoryMonitor(String directory, RegulationPublisher publisher)
@@ -67,7 +68,7 @@ public class RegulationDirectoryMonitor {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
                 try
                 {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 }
                 catch(InterruptedException ex)
                 {
@@ -106,7 +107,9 @@ public class RegulationDirectoryMonitor {
                 //regulationPublisher.send(enrichedRegulation);
                 messagePublisher.send(enrichedMessage);
             }
-        } catch (IOException e) {
+            System.out.println("SLEEPING...");
+            Thread.sleep(5000); //Prevent AWS from rejecting multiple calls
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 

@@ -2,7 +2,9 @@ package backend.model;
 
 import org.neo4j.springframework.data.core.schema.*;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.neo4j.springframework.data.core.schema.Relationship.Direction.OUTGOING;
@@ -16,9 +18,6 @@ public class BusinessUnit {
     @Property("name")
     private String buName;
 
-    @Property("division")
-    private Division buDivision;
-
     @Property("seniorLead")
     private String buSeniorLead;
 
@@ -26,9 +25,9 @@ public class BusinessUnit {
     private String buComplianceOfficer;
 
     @Relationship(type="CONTAINS", direction = OUTGOING)
-    private List<Team> teams;
+    private List<Team> teams = new ArrayList<>();;
 
-    @PersistenceConstructor
+    /*@PersistenceConstructor
     public BusinessUnit(Long buID, String buName, Division buDivision, String buSeniorLead, String buComplianceOfficer, List<Team> teams) {
         this.buID = buID;
         this.buName = buName;
@@ -36,7 +35,17 @@ public class BusinessUnit {
         this.buSeniorLead = buSeniorLead;
         this.buComplianceOfficer = buComplianceOfficer;
         this.teams = teams;
+    }*/
+
+    public BusinessUnit(BusinessUnit businessUnit){
+        this.buID = null;
+        this.buName = businessUnit.getBuName();
+        this.buSeniorLead = businessUnit.getBuSeniorLead();
+        this.buComplianceOfficer = businessUnit.getBuComplianceOfficer();
+        this.teams = businessUnit.getTeams();
     }
+
+    public BusinessUnit(){};
 
     public Long getBuID() {
         return buID;
@@ -52,14 +61,6 @@ public class BusinessUnit {
 
     public void setBuName(String buName) {
         this.buName = buName;
-    }
-
-    public Division getBuDivision() {
-        return buDivision;
-    }
-
-    public void setBuDivision(Division buDivision) {
-        this.buDivision = buDivision;
     }
 
     public String getBuSeniorLead() {
@@ -86,9 +87,19 @@ public class BusinessUnit {
         this.teams = teams;
     }
 
-    public Boolean addTeam(Team team)
+    public BusinessUnit addTeam(Team team)
     {
-        return teams.add(team);
+        teams.add(createTeam(team));
+        return this;
+    }
+
+    private static Team createTeam(Team team){
+
+        Assert.notNull(team, "Team must not be null");
+        Assert.notNull(team.getTeamName(), "Team Name, must not be null");
+
+        Team newTeam = new Team(team);
+        return newTeam;
     }
 
     public void removeTeam(Long teamId)

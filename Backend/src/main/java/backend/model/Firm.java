@@ -2,10 +2,11 @@ package backend.model;
 
 import org.neo4j.springframework.data.core.schema.Id;
 import org.neo4j.springframework.data.core.schema.Node;
-import org.neo4j.springframework.data.core.schema.Property;
 import org.neo4j.springframework.data.core.schema.Relationship;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.neo4j.springframework.data.core.schema.Relationship.Direction.OUTGOING;
@@ -17,7 +18,7 @@ public class Firm {
     private String firmName;
 
     @Relationship(type ="HAS",direction =OUTGOING)
-    private List<Division> divisions;
+    private List<Division> divisions = new ArrayList<>();
 
     @PersistenceConstructor
     public Firm(String firmName, List<Division> divisions) {
@@ -41,9 +42,19 @@ public class Firm {
         this.divisions = divisions;
     }
 
-    public Boolean addDivision(Division division)
+    public Firm addDivision(Division regulation)
     {
-        return divisions.add(division);
+        divisions.add(createRegulation(regulation));
+        return this;
+    }
+
+    private static Division createRegulation(Division division){
+
+        Assert.notNull(division, "Division must not be null");
+        Assert.notNull(division.getDivisionName(), "Regulation code, must not be null");
+
+        Division newDivision = new Division(division);
+        return newDivision;
     }
 
     public void removeDivision(Long divisionId)

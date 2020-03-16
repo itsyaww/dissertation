@@ -3,15 +3,14 @@ package backend.controller;
 import backend.model.BusinessUnit;
 import backend.model.Division;
 import backend.repository.DivisionRepository;
-import backend.repository.DivisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.Optional;
 
@@ -88,13 +87,12 @@ public class DivisionController {
         }
     }
 
-    @PutMapping(value = "/add/business-unit", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?>  addBusinessUnit(@RequestBody Long divisionId, @RequestBody BusinessUnit businessUnit)
+    @PutMapping(value = "{divisionName}/add/business-unit", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  addBusinessUnit(@PathVariable String divisionName, @RequestBody BusinessUnit businessUnit)
     {
-
-        divisionRepository.findById(divisionId).ifPresent(firm -> {
-            firm.addBusinessUnit(businessUnit);
-            divisionRepository.save(firm);
+        divisionRepository.findByDivisionName(divisionName).ifPresent(division -> {
+            division.addBusinessUnit(businessUnit);
+            divisionRepository.save(division);
         });
 
         return ResponseEntity.status(HttpStatus.OK).build();

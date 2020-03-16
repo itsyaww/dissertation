@@ -5,7 +5,9 @@ import org.neo4j.springframework.data.core.schema.Node;
 import org.neo4j.springframework.data.core.schema.Property;
 import org.neo4j.springframework.data.core.schema.Relationship;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.neo4j.springframework.data.core.schema.Relationship.Direction.OUTGOING;
@@ -13,20 +15,28 @@ import static org.neo4j.springframework.data.core.schema.Relationship.Direction.
 @Node
 public class Module {
 
-    @Id @Property
+    @Id
     private String moduleCode;
 
     @Property("name")
     private String moduleName;
 
     @Relationship(type="INCLUDES", direction=OUTGOING)
-    private List<Regulation> regulations;
+    private List<Regulation> regulations = new ArrayList<>();
 
     @Property("regulator")
     private String supervisoryBody;
 
     @Property("country")
     private String supervisoryCountry;
+
+    public Module(Module module) {
+        this.moduleCode = module.getModuleCode();
+        this.moduleName = module.getModuleName();
+        this.regulations = module.getRegulations();
+        this.supervisoryBody = module.getSupervisoryBody();
+        this.supervisoryCountry = module.getSupervisoryCountry();
+    }/*
 
     @PersistenceConstructor
     public Module(String moduleCode, String moduleName, List<Regulation> regulations, String supervisoryBody, String supervisoryCountry) {
@@ -35,8 +45,7 @@ public class Module {
         this.regulations = regulations;
         this.supervisoryBody = supervisoryBody;
         this.supervisoryCountry = supervisoryCountry;
-    }
-
+    }*/
     public Module(){}
 
     public String getModuleCode() {
@@ -79,9 +88,19 @@ public class Module {
         this.supervisoryCountry = supervisoryCountry;
     }
 
-    public Boolean addRegulation(Regulation regulation)
+    public Module addRegulation(Regulation regulation)
     {
-        return regulations.add(regulation);
+        regulations.add(createRegulation(regulation));
+        return this;
+    }
+
+    private static Regulation createRegulation(Regulation regulation){
+
+        Assert.notNull(regulation, "Regulation must not be null");
+        Assert.notNull(regulation.getRegulationCode(), "Regulation code, must not be null");
+
+        Regulation newRegulation = new Regulation(regulation);
+        return newRegulation;
     }
 
     public void removeRegulation(Long regulationId)

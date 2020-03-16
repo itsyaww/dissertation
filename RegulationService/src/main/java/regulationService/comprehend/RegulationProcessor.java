@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 public class RegulationProcessor {
 
     private static final Regions REGION = Regions.EU_WEST_2;
-    private final String FCA_REGULATION_REGEX = "(FCA \\d{4}\\/\\d*)\\s*([ \\w\\/.,’()“”:;-]*)\\s*([ \\w\\/.,’()“”:;-]*)[\\s\\w\\/.,’()“”:;-]*Commencement[\\s\\w\\/.,’()“”:;-]+?(\\d{1,2}.*\\d{4})[\\s\\w\\/.,’()“”:;-]*By order of the Board\\s+(\\d{1,2}.*\\d{4})";
-    
+    //private final String FCA_REGULATION_REGEX = "(FCA \\d{4}\\/\\d*)\\s*([ \\w\\/.,’()“”:;-]*)\\s*([ \\w\\/.,’()“”:;-]*)[\\s\\w\\/.,’()“”:;-]*Commencement[\\s\\w\\/.,’()“”:;-]+?(\\d{1,2}.*\\d{4})[\\s\\w\\/.,’()“”:;-]*By order of the Board\\s+(\\d{1,2}.*\\d{4})";
+    private final String FCA_REGULATION_REGEX = "([a-zA-Z]{3} \\d{4}\\/\\d*)\\s*([ \\w\\/.,’()“”:;-]*)\\s*([ \\w\\/.,’()“”:;-]*)[\\s\\w\\/.,’()“”:;-]*Commencement[\\s\\w\\/.,’()“”:;-]+?(\\d{1,2}.*\\d{4})[\\s\\w\\/.,’()“”:;-]*By order of the Board\\s+(\\d{1,2}.*\\d{4})";
     private static final String LANGUAGE_CODE = "en";
     private static final String ENDPOINT_NAME = "categorise-regulation-module";
     private static final String CLASSIFIER_ARN = "arn:aws:comprehend:eu-west-2:172506724237:document-classifier/Regulation-Shortened";
@@ -70,7 +70,8 @@ public class RegulationProcessor {
         //detectEntities(comprehendClient);
         //detectKeyPhrases(comprehendClient);
 
-        processor.classifyRegulation(exampleText);
+        //processor.classifyRegulation(exampleText);
+        processor.enrichRegulation(exampleText);
     }
 
     private AmazonComprehend setUpComprehendClient(){
@@ -260,7 +261,9 @@ public class RegulationProcessor {
         {
             return matcher.group(1);
         }
-        return "NO MATCH";//fileContents.split(System.getProperty("line.separator"))[0];
+        return fileContents.split(System.getProperty("line.separator"))[0];
+
+        //return "NO MATCH";
 
         //return lines[0]; //First line on any regulation is the regulation code if regex doesn't work
     }
@@ -279,6 +282,8 @@ public class RegulationProcessor {
             }
             return titleStart + titleEnd;
         }
-        return "NO MATCH";//fileContents.split(System.getProperty("line.separator"))[1]; //Second line on any regulation file is the regulation title if regex doesn't work
+        return fileContents.split(System.getProperty("line.separator"))[1]; //Second line on any regulation file is the regulation title if regex doesn't work
+
+        //return "NO MATCH";
     }
 }

@@ -1,10 +1,5 @@
 package backend.consumer;
 
-import backend.model.Regulation;
-import org.springframework.kafka.annotation.KafkaListener;
-
-import java.util.concurrent.CountDownLatch;
-
 public class RegulationReceiver {
 
     /*private CountDownLatch latch = new CountDownLatch(1);
