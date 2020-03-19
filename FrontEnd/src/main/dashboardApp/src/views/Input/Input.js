@@ -2,7 +2,6 @@ import React from "react";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
 
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
@@ -44,43 +43,19 @@ export default function Input(props){
         <GridContainer>
             <GridItem xs={12} sm={12} md={8}>
                 <Card>
-                    <CardHeader color="primary">
+                    <CardHeader color="success">
                         <h4 className={classes.cardTitleWhite}>File Upload</h4>
                         <p className={classes.cardCategoryWhite}>Upload regulation PDF documents</p>
                     </CardHeader>
                     <CardBody>
 
-                        <GridContainer>
-                            <GridItem xs={12} sm={12} md={5}>
-                                <FileUpload setFieldValue={props.setFieldValue}/>
-                            </GridItem>
-                        </GridContainer>
-                        <GridContainer>
-                            <GridItem xs={12} sm={12} md={5}>
-                                <CustomInput
-                                    labelText="File Path (disabled)"
-                                    id="company-disabled"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
-                                    inputProps={{
-                                        disabled: true
-                                    }}
-                                />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={3}>
-                                <CustomInput
-                                    labelText="File Name"
-                                    id="file-name"
-                                    formControlProps={{
-                                        fullWidth: true
-                                    }}
-                                />
-                            </GridItem>
-                        </GridContainer>
+                        <GridItem xs={12} sm={12} md={12}>
+                            <FileUpload setFieldValue={props.setFieldValue}/>
+                        </GridItem>
+
                     </CardBody>
                     <CardFooter>
-                        <Button onClick={props.handleSubmit} color="primary">Submit Files</Button>
+                        <Button onClick={props.handleSubmit} color="success">Submit Files</Button>
                     </CardFooter>
                 </Card>
             </GridItem>

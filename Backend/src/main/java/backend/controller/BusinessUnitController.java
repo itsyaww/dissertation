@@ -58,6 +58,7 @@ public class BusinessUnitController {
 
     @GetMapping(value = {"", "/"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllBusinessUnits() {
+        System.out.println("Returning all Business units...");
         return new ResponseEntity<>(businessUnitRepository.findAll(), HttpStatus.OK);
     }
 

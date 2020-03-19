@@ -90,9 +90,9 @@ public class RegulationController {
     }
 
     //WEB OPERATIONS FOR UI
-    @GetMapping(value = { "/incoming/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> countIncomingRegulationAPI(@PathVariable Long id) {
-        return new ResponseEntity<>(regulationRepository.countDistinctByRegulationID(id),/* addResponseHeaders,*/ HttpStatus.OK);
+    @GetMapping(value = { "/incoming/"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> countIncomingRegulationAPI() {
+        return new ResponseEntity<>(regulationRepository.count(),/* addResponseHeaders,*/ HttpStatus.OK);
     }
 
     /*@GetMapping(value = { "/no-supervisory-bodies/{supervisoryBody}"}, produces = MediaType.APPLICATION_JSON_VALUE)

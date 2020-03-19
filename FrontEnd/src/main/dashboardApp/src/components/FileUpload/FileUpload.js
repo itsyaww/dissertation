@@ -12,6 +12,7 @@ class FileUpload extends Component{
     render(){
         return (
             <DropzoneArea
+                maxWidth={"xl"}
                 showFileNames={true}
                 dropzoneText={"Drag document here or click"}
                 onChange={this.handleChange.bind(this)}

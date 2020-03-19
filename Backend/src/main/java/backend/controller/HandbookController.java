@@ -45,6 +45,11 @@ public class HandbookController {
         return new ResponseEntity<>(handbookRepository.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(value = {"/count"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getHandbookCount() {
+        return new ResponseEntity<>(handbookRepository.count(), HttpStatus.OK);
+    }
+
     @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateHandbook(@PathVariable String id, @RequestBody Handbook updatedHandbook) {
 

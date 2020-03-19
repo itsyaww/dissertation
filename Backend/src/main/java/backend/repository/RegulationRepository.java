@@ -8,8 +8,6 @@ import java.util.Optional;
 public interface RegulationRepository extends Neo4jRepository<Regulation, Long> {
     //Put custom methods for data access
 
-    Optional<Regulation> countDistinctByRegulationID(Long regulationID);
-
     /*Optional<Regulation> countDistinctBySupervisoryBody(String supervisoryBody);
 
     Optional<Regulation> countDistinctBySupervisoryCountry(String supervisoryCountry);*/

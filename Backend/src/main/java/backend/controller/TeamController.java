@@ -26,9 +26,13 @@ public class TeamController {
     @Autowired
     private final HandbookRepository handbookRepository;
 
-    public TeamController(TeamRepository teamRepository, HandbookRepository handbookRepository) {
+    /*@Autowired
+    private final ModuleRepository moduleRepository;*/
+
+    public TeamController(TeamRepository teamRepository, HandbookRepository handbookRepository/*, ModuleRepository moduleRepository*/) {
         this.teamRepository = teamRepository;
         this.handbookRepository = handbookRepository;
+        /*this.moduleRepository = moduleRepository;*/
     }
 
     //CRUD OPERATIONS
@@ -126,4 +130,43 @@ public class TeamController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    /*@PutMapping(value = "{teamId}/module/setComplianceRisk/{atRisk}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  setModuleComplianceRisk(@PathVariable String teamId, @PathVariable Boolean atRisk, @RequestBody Module module)
+    {
+        teamRepository.findByTeamName(teamId).ifPresent(team -> {
+
+            if (moduleRepository.findByModuleCode(module.getModuleCode()).isPresent())
+            {
+                Module existingModule = moduleRepository.findByModuleCode(module.getModuleCode()).get();
+                team.setModuleRegulationRisk(module, atRisk);
+
+                moduleRepository.save(existingModule);
+                teamRepository.save(team);
+            }
+
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping(value = "{teamId}/module/getComplianceRisk", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?>  getModuleComplianceRisk(@PathVariable String teamId, @RequestBody Module module)
+    {
+        Boolean risk = null;
+        if (teamRepository.findByTeamName(teamId).isPresent())
+        {
+            Team team = teamRepository.findByTeamName(teamId).get();
+            if (moduleRepository.findByModuleCode(module.getModuleCode()).isPresent())
+            {
+                Module existingModule = moduleRepository.findByModuleCode(module.getModuleCode()).get();
+                risk = team.getModuleRegulationRisk(module);
+
+                return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(risk);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }*/
 }

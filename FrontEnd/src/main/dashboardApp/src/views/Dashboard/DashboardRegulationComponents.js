@@ -16,27 +16,31 @@ export default class DashboardRegulationComponents extends React.Component {
         super(props);
 
         this.state = {goingLiveRegulations: 0,
-        incomingRegulation :0,
-        riskbusinessUnits :0,
+        incomingRegulation : 0,
+        riskbusinessUnits : 0,
         supervisoryBodies: 0};
     }
 
-    componentDidMount() {
-        this.state.goingLiveRegulations = DashboardServices.getGoingLiveRegulations();
-        this.state.incomingRegulation = DashboardServices.getIncomingRegulations();
-        this.state.riskbusinessUnits = DashboardServices.getAtRiskBusinessUnits();
-        this.state.supervisoryBodies = DashboardServices.getUniqueSupervisorBodyCount();
-    }
+    componentDidMount = async () => {
+
+        const liveReg = await DashboardServices.getIncomingRegulations();
+        const incomingReg = await DashboardServices.getIncomingRegulations();
+        const riskBU = await DashboardServices.getIncomingRegulations();
+        const supBody = await DashboardServices.getUniqueSupervisorBodyCount();
+
+        this.setState({
+            goingLiveRegulations:liveReg,
+            incomingRegulation :incomingReg,
+            riskbusinessUnits :riskBU,
+            supervisoryBodies :supBody});
+    };
 
     render(){
-        const liveReg = (<h3 className={this.props.classes.cardTitle}>{this.state.goingLiveRegulations}</h3>);
-        //const liveReg = 49;
-        const incomingReg = (<h3 className={this.props.classes.cardTitle}>{this.state.incomingRegulation}</h3>)
-        //const incomingReg = 15;
-        const riskBU = (<h3 className={this.props.classes.cardTitle}>{this.state.riskbusinessUnits}</h3>)
-        //const riskBU = 23;
-        const supBody = (<h3 className={this.props.classes.cardTitle}>{this.state.supervisoryBodies}</h3>)
-        //const supBody = 10;
+
+        const liveReg = this.state.goingLiveRegulations;
+        const incomingReg = this.state.incomingRegulation;
+        const riskBU = this.state.riskbusinessUnits;
+        const supBody = this.state.supervisoryBodies;
 
         return(
             <GridContainer>
@@ -51,12 +55,8 @@ export default class DashboardRegulationComponents extends React.Component {
                         </CardHeader>
                         <CardFooter stats>
                             <div className={this.props.classes.stats}>
-                                <Danger>
-                                    <Warning />
-                                </Danger>
-                                <a href="#pablo" onClick={e => e.preventDefault()}>
-                                    Get more space
-                                </a>
+                                <Warning />
+                                Attention Required
                             </div>
                         </CardFooter>
                     </Card>

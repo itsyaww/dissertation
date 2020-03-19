@@ -18,7 +18,6 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
-import Libraryadd from "@material-ui/icons/LibraryAdd";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -29,7 +28,6 @@ import Language from "@material-ui/icons/Language";
 import DashboardPage from "./views/Dashboard/Dashboard.js";
 import UserProfile from "./views/UserProfile/UserProfile.js";
 import TableList from "./views/TableList/TableList.js";
-import BusinessUnits from "./views/BusinessUnits/BusinessUnits";
 import Typography from "./views/Typography/Typography.js";
 import Icons from "./views/Icons/Icons.js";
 import Input from "./views/Input/Input.js";
@@ -46,19 +44,19 @@ const dashboardRoutes = [
         layout: "/admin"
     },
     {
-        path: "/input",
-        name: "Input",
-        icon: Libraryadd,
-        component: FormikHOC,
+        path: "/user",
+        name: "User Profile",
+        icon: Person,
+        component: UserProfile,
         layout: "/admin"
     },
     {
-        path: "/businessUnits",
-        name: "Business Units",
-        icon: LibraryBooks,
-        component: BusinessUnits,
+        path: "/table",
+        name: "Table List",
+        icon: "content_paste",
+        component: TableList,
         layout: "/admin"
-    }/*,
+    },
     {
         path: "/typography",
         name: "Typography",
@@ -67,12 +65,33 @@ const dashboardRoutes = [
         layout: "/admin"
     },
     {
+        path: "/icons",
+        name: "Icons",
+        icon: BubbleChart,
+        component: Icons,
+        layout: "/admin"
+    },
+    {
+        path: "/input",
+        name: "Input",
+        icon: LibraryBooks,
+        component: FormikHOC,
+        layout: "/admin"
+    },
+    {
+        path: "/maps",
+        name: "Maps",
+        icon: LocationOn,
+        component: Maps,
+        layout: "/admin"
+    },
+    {
         path: "/notifications",
         name: "Notifications",
         icon: Notifications,
         component: NotificationsPage,
         layout: "/admin"
-    }*/
+    }
 ];
 
 export default dashboardRoutes;

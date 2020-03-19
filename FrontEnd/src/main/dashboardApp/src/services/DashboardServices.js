@@ -1,7 +1,8 @@
 const GO_LIVE_REGULATION_URL="/regulation/go-live/United+Kingdom";
-const INCOMING_REGULATION_URL="/regulation/incoming/220";
+const INCOMING_REGULATION_URL="/regulation/incoming/";
+const GET_ALL_REGULATION_URL="/regulation/";
 const AT_RISK_BUSINESS_URL="/business/at-risk/";
-const UNIQUE_SUPERVISORY_BODIES_URL="/regulation/no-supervisory-bodies/FCA";
+const UNIQUE_SUPERVISORY_BODIES_URL="/handbook/count/";
 
 class DashboardServices{
 
@@ -26,6 +27,10 @@ class DashboardServices{
 
     static getIncomingRegulations(){
         return this.fetchDataGET(INCOMING_REGULATION_URL);
+    };
+
+    static getAllRegulations(){
+        return this.fetchDataGET(GET_ALL_REGULATION_URL);
     };
 
     static getGoingLiveRegulations(){
