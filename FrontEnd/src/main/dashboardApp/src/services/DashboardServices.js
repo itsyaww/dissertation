@@ -1,7 +1,7 @@
 const GO_LIVE_REGULATION_URL="/regulation/go-live/United+Kingdom";
 const INCOMING_REGULATION_URL="/regulation/incoming/";
 const GET_ALL_REGULATION_URL="/regulation/";
-const AT_RISK_BUSINESS_URL="/business/at-risk/";
+const AT_RISK_BUSINESS_URL="/business-unit/at-risk/";
 const UNIQUE_SUPERVISORY_BODIES_URL="/handbook/count/";
 
 class DashboardServices{

@@ -25,7 +25,7 @@ export default class DashboardRegulationComponents extends React.Component {
 
         const liveReg = await DashboardServices.getIncomingRegulations();
         const incomingReg = await DashboardServices.getIncomingRegulations();
-        const riskBU = await DashboardServices.getIncomingRegulations();
+        const riskBU = await DashboardServices.getAtRiskBusinessUnits();
         const supBody = await DashboardServices.getUniqueSupervisorBodyCount();
 
         this.setState({

@@ -112,4 +112,11 @@ public class BusinessUnitController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    //WEB OPERATIONS FOR UI
+    @GetMapping(value = { "/at-risk/"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> countAtRiskBusinessUnits() {
+        System.out.println("Returning Business Unit Count...");
+        return new ResponseEntity<>(businessUnitRepository.count(),/* addResponseHeaders,*/ HttpStatus.OK);
+    }
 }

@@ -8,7 +8,9 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.neo4j.springframework.data.core.schema.Relationship.Direction.OUTGOING;
 
@@ -32,6 +34,9 @@ public class Team {
     @Relationship(type="SUBSCRIBES_TO", direction=OUTGOING)
     private List<Module> modules = new ArrayList<>();
 
+    /*@Relationship("IS_COMPLIANT_WITH")
+    private Map<String, ComplianceRisk> regulationRisk = new HashMap<>();*/
+
     @PersistenceConstructor
     public Team(Long teamID, String teamName, String teamPrimaryManager, String teamSecondaryManager, Double riskLevel, List<Module> modules) {
         this.teamID = teamID;
@@ -40,6 +45,7 @@ public class Team {
         this.teamSecondaryManager = teamSecondaryManager;
         this.riskLevel = riskLevel;
         this.modules = modules;
+        /*this.regulationRisk = regulationRisk;*/
     }
 
     public Team(){}
@@ -51,6 +57,7 @@ public class Team {
         this.teamSecondaryManager = team.getTeamSecondaryManager();
         this.riskLevel = team.getRiskLevel();
         this.modules = team.getModules();
+        /*this.regulationRisk = team.getRegulationRisk();*/
     }
 
     public Long getTeamID() {
@@ -111,7 +118,7 @@ public class Team {
                 existingModule.setRegulations(module.getRegulations());
                 existingModule.setSupervisoryBody(module.getSupervisoryBody());
                 existingModule.setSupervisoryCountry(module.getSupervisoryCountry());
-            
+
                 return this;
             }
         }
@@ -139,4 +146,33 @@ public class Team {
             }
         });
     }
+/*
+    public Map<String, ComplianceRisk> getRegulationRisk() {
+        return regulationRisk;
+    }
+
+    public void setRegulationRisk(Map<String, ComplianceRisk> regulationRisk) {
+        this.regulationRisk = regulationRisk;
+    }
+
+    public void setModuleRegulationRisk(Module module, Boolean atRisk)
+    {
+        ComplianceRisk complianceRisk;
+        if(regulationRisk.containsKey(module.getModuleCode()))
+        {
+            complianceRisk = new ComplianceRisk();
+            complianceRisk.setAtRisk(atRisk);
+            regulationRisk.put(module.getModuleCode(),complianceRisk);
+        }else
+        {
+            complianceRisk = regulationRisk.get(module.getModuleCode());
+            complianceRisk.setAtRisk(atRisk);
+        }
+    }
+
+    public Boolean getModuleRegulationRisk(Module module)
+    {
+        ComplianceRisk complianceRisk = regulationRisk.get(module.getModuleCode());
+        return complianceRisk.getAtRisk();
+    }*/
 }
