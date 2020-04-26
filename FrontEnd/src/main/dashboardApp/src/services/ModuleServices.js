@@ -1,4 +1,4 @@
-const GET_ALL_MODULES_URL="/module/";
+const GET_ALL_MODULES_URL="http://backend-env.eba-tykhr4mp.eu-west-2.elasticbeanstalk.com:8080/module/";
 
 class ModuleServices{
 

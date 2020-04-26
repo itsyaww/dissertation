@@ -1,4 +1,4 @@
-const GET_ALL_TEAMS_URL="/team/";
+const GET_ALL_TEAMS_URL="http://backend-env.eba-tykhr4mp.eu-west-2.elasticbeanstalk.com:8080/team/";
 
 class TeamServices{
 

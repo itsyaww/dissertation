@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Optional;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin//(origins = {"http://localhost:3000", "http://localhost:5000"})
 @RestController
 @RequestMapping("/business-unit")
 public class BusinessUnitController {

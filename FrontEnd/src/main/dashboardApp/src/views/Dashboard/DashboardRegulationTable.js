@@ -24,7 +24,12 @@ export default class DashboardRegulationTable extends React.Component {
         const regs = await DashboardServices.getAllRegulations();
         const result = [];
 
-        regs.forEach((reg) => (result.push([reg.regulationID, reg.regulationCode, reg.regulationTitle, reg.dateIssued, reg.goLive, reg.atRisk])));
+        if(!regs)
+        {
+            return;
+        }
+
+        regs.forEach((reg) => (result.push([reg.regulationID.toString(), reg.regulationCode.toString(), reg.regulationTitle.toString(), reg.dateIssued.toString(), reg.goLive.toString(), reg.atRisk.toString()])));
         console.log(result);
 
         this.setState({

@@ -4,7 +4,6 @@ import regulationService.comprehend.RegulationProcessor;
 import regulationService.kafka.consumer.RegulationReceiver;
 import regulationService.kafka.publisher.MessagePublisher;
 import regulationService.model.Message;
-import regulationService.model.Regulation;
 import regulationService.kafka.publisher.RegulationPublisher;
 
 import java.io.IOException;
@@ -20,35 +19,44 @@ public class RegulationDirectoryMonitor {
 
     private RegulationFileReader regulationFileReader;
     private RegulationProcessor regulationProcessor;
-    private String directory;
+    private String workingDirectory;
+    private String completedDirectory;
 
     public static void main(String[] param) throws IOException {
-        RegulationDirectoryMonitor monitor = new RegulationDirectoryMonitor("");
+        RegulationDirectoryMonitor monitor = new RegulationDirectoryMonitor("","");
         //String text = monitor.regulationFileReader.parseRegulationPDF("/Users/paulfrimpong/Documents/COMPUTER SCIENCE/Year 4/Final Year Project/FinalYearProject/RegulationService/src/main/resources/FCA_2019_83.pdf");
         String text = monitor.regulationFileReader.parseRegulationPDF("/Users/paulfrimpong/Documents/COMPUTER SCIENCE/Year 4/Final Year Project/FinalYearProject/RegulationService/src/main/resources/FCA_2010_59.pdf");
         Message message = monitor.regulationProcessor.createMessage(text);
     }
 
-    public RegulationDirectoryMonitor(String directory, RegulationPublisher publisher)
+    public RegulationDirectoryMonitor(String workingDirectory, String completedDirectory, RegulationPublisher publisher)
     {
-        this(directory);
+        this.workingDirectory = workingDirectory;
+        this.completedDirectory = completedDirectory;
         this.regulationPublisher = publisher;
     }
 
-    public RegulationDirectoryMonitor(String directory, RegulationPublisher publisher, MessagePublisher mPublisher)
+    public RegulationDirectoryMonitor(String workingDirectory, String completedDirectory, RegulationPublisher publisher, MessagePublisher mPublisher)
     {
-        this(directory);
+        this.workingDirectory = workingDirectory;
+        this.completedDirectory = completedDirectory;
         this.regulationPublisher = publisher;
         this.messagePublisher = mPublisher;
     }
 
-    public RegulationDirectoryMonitor(String directory){
+    public RegulationDirectoryMonitor(String workingDirectory, String completedDirectory){
 
-        if(directory.equals(""))
+        if(workingDirectory.equals(""))
         {
-            this.directory = "/Users/paulfrimpong/RegulationFiles";
+            this.workingDirectory = "/Users/paulfrimpong/RegulationFiles";
         }
-        else{this.directory = directory;}
+        else{this.workingDirectory = workingDirectory;}
+
+        if(completedDirectory.equals(""))
+        {
+            this.completedDirectory = "/Users/paulfrimpong/RegulationFiles/Processed";
+        }
+        else{this.completedDirectory = completedDirectory;}
 
         regulationFileReader = new RegulationFileReader();
         regulationProcessor = new RegulationProcessor();
@@ -58,7 +66,7 @@ public class RegulationDirectoryMonitor {
     public void monitorDirectory() throws IOException, InterruptedException {
 
         WatchService watchService = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get(directory);
+        Path path = Paths.get(workingDirectory);
 
         path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
 
@@ -66,15 +74,6 @@ public class RegulationDirectoryMonitor {
         while ((watchKey = watchService.take()) != null) {
 
             for (WatchEvent<?> event : watchKey.pollEvents()) {
-                try
-                {
-                    Thread.sleep(500);
-                }
-                catch(InterruptedException ex)
-                {
-                    Thread.currentThread().interrupt();
-                }
-
                 if (event.kind().equals(ENTRY_CREATE))
                 {
                     handleCreated(event);
@@ -96,23 +95,35 @@ public class RegulationDirectoryMonitor {
     private void handleCreated(WatchEvent<?> event) {
         logEvent(event);
 
-        try {
-            String regulationContent = regulationFileReader.parseRegulationPDF(this.directory + "/" + event.context().toString());
+        String directory = this.workingDirectory;
+        String fileName = event.context().toString();
+        String filePath = directory + "/" + fileName;
 
-            if(regulationContent != null) //check file content successfully processed
-            {
-                //Regulation enrichedRegulation = regulationProcessor.enrichRegulation(regulationContent);
-                Message enrichedMessage = regulationProcessor.createMessage(regulationContent);
+        if(isPDF(filePath)){
+            try {
+                String regulationContent = regulationFileReader.parseRegulationPDF(filePath);
 
-                //regulationPublisher.send(enrichedRegulation);
-                messagePublisher.send(enrichedMessage);
+                if(regulationContent != null) //check file content successfully processed
+                {
+                    //Regulation enrichedRegulation = regulationProcessor.enrichRegulation(regulationContent);
+                    Message enrichedMessage = regulationProcessor.createMessage(regulationContent);
+
+                    //regulationPublisher.send(enrichedRegulation);
+                    messagePublisher.send(enrichedMessage);
+                }
+                System.out.println("SLEEPING...");
+                Thread.sleep(5000); //Prevent AWS from rejecting multiple calls
+
+
+                String newFilePath = completedDirectory  + "/" + fileName;
+                moveFile(filePath, newFilePath);
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
             }
-            System.out.println("SLEEPING...");
-            Thread.sleep(5000); //Prevent AWS from rejecting multiple calls
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
         }
-
+        else{
+            System.out.println(fileName + " is not a .pdf file. Skipping...");
+        }
     }
 
     private void handleModified(WatchEvent<?> event) {
@@ -121,6 +132,23 @@ public class RegulationDirectoryMonitor {
 
     private void handledDeleted(WatchEvent<?> event) {
         logEvent(event);
+    }
+
+    private boolean isPDF(String filePath) {
+        return filePath.endsWith(".pdf");
+    }
+
+    private void moveFile(String filePath, String newFilePath) throws IOException {
+        Path temp = Files.move(Paths.get(filePath), Paths.get(newFilePath));
+
+        if(temp != null)
+        {
+            System.out.println("File renamed and moved successfully");
+        }
+        else
+        {
+            System.out.println("Failed to move the file");
+        }
     }
 
     private void logEvent(WatchEvent<?> event)

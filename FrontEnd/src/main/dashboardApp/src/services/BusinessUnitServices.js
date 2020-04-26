@@ -1,4 +1,4 @@
-const GET_ALL_BUSINESS_UNITS_URL="/business-unit/";
+const GET_ALL_BUSINESS_UNITS_URL="http://backend-env.eba-tykhr4mp.eu-west-2.elasticbeanstalk.com:8080/business-unit/";
 
 class BusinessUnitServices{
 

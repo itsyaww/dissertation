@@ -37,7 +37,7 @@ public class ServiceApplication implements CommandLineRunner {
 		//regulationPublisher.send("TESTING REGULATION5");
 		//regulationPublisher.send("TESTING REGULATION6");
 
-		RegulationDirectoryMonitor directoryMonitor = new RegulationDirectoryMonitor("/Users/paulfrimpong/RegulationFiles",regulationPublisher, messagePublisher);
+		RegulationDirectoryMonitor directoryMonitor = new RegulationDirectoryMonitor("/Users/paulfrimpong/RegulationFiles","",regulationPublisher, messagePublisher);
 		directoryMonitor.monitorDirectory();
 
 		/*new RegulationProcessor().runClient();*/

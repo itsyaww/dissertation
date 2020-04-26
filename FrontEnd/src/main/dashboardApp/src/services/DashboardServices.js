@@ -1,8 +1,9 @@
-const GO_LIVE_REGULATION_URL="/regulation/go-live/United+Kingdom";
-const INCOMING_REGULATION_URL="/regulation/incoming/";
-const GET_ALL_REGULATION_URL="/regulation/";
-const AT_RISK_BUSINESS_URL="/business-unit/at-risk/";
-const UNIQUE_SUPERVISORY_BODIES_URL="/handbook/count/";
+const BASE_URL="http://backend-env.eba-tykhr4mp.eu-west-2.elasticbeanstalk.com:8080";
+const GO_LIVE_REGULATION_URL= BASE_URL + "/regulation/incoming/";
+const INCOMING_REGULATION_URL=BASE_URL + "/regulation/incoming/";
+const GET_ALL_REGULATION_URL=BASE_URL + "/regulation/";
+const AT_RISK_BUSINESS_URL=BASE_URL + "/business-unit/at-risk/";
+const UNIQUE_SUPERVISORY_BODIES_URL=BASE_URL + "/handbook/count/";
 
 class DashboardServices{
 
@@ -14,9 +15,9 @@ class DashboardServices{
         };
         try {
             let response = await fetch(URL,  {...getRequest});
-            return await response.json()
+            return await response.json();
         }catch(e){
-            console.log(e)
+            console.log(e);
         }
 
     };

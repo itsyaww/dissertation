@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin//(origins = {"http://localhost:3000", "http://localhost:5000"})
 @RestController
 @RequestMapping("/module")
 public class ModuleController {
