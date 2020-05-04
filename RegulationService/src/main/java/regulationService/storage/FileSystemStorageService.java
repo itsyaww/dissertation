@@ -21,10 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+    private final Path processedFileLocation;
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
+        this.processedFileLocation = Paths.get(properties.getLocation() + "/Processed");
     }
 
     @Override
@@ -64,15 +66,50 @@ public class FileSystemStorageService implements StorageService {
 
     }
 
+    public Stream<Path> loadProcessedFiles() {
+        try {
+            return Files.walk(this.processedFileLocation, 1)
+                    .filter(path -> !path.equals(this.processedFileLocation) && !path.equals(Paths.get(rootLocation.toString() + "/Processed/.DS_Store")) )
+                    .map(this.processedFileLocation::relativize);
+        }
+        catch (IOException e) {
+            throw new StorageException("Failed to read stored files", e);
+        }
+
+    }
+
     @Override
     public Path load(String filename) {
         return rootLocation.resolve(filename);
+    }
+
+    public Path loadProcessedFile(String filename) {
+        return processedFileLocation.resolve(filename);
     }
 
     @Override
     public Resource loadAsResource(String filename) {
         try {
             Path file = load(filename);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            }
+            else {
+                throw new StorageFileNotFoundException(
+                        "Could not read file: " + filename);
+
+            }
+        }
+        catch (MalformedURLException e) {
+            throw new StorageFileNotFoundException("Could not read file: " + filename, e);
+        }
+    }
+
+
+    public Resource loadProcessedFileAsResource(String filename) {
+        try {
+            Path file = loadProcessedFile(filename);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;

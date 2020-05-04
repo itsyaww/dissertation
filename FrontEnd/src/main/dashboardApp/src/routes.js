@@ -32,6 +32,7 @@ import DashboardPage from "./views/Dashboard/Dashboard.js";
 import UserProfile from "./views/UserProfile/UserProfile.js";
 import TableList from "./views/TableList/TableList.js";
 import BusinessUnits from "./views/BusinessUnits/BusinessUnits";
+import RegulationOverview from "./views/RegulationOverview/RegulationOverview";
 import Teams from "./views/Teams/Teams";
 import Modules from "./views/Modules/Modules";
 import Typography from "./views/Typography/Typography.js";
@@ -50,6 +51,12 @@ const dashboardRoutes = [
         layout: "/admin"
     },
     {
+        path: "/regulations",
+        name: "Regulation Overview",
+        icon: Module,
+        component: RegulationOverview,
+        layout: "/admin"
+    },{
         path: "/modules",
         name: "Modules",
         icon: Module,
@@ -76,21 +83,7 @@ const dashboardRoutes = [
         icon: Libraryadd,
         component: FormikHOC,
         layout: "/admin"
-    }/*,
-    {
-        path: "/typography",
-        name: "Typography",
-        icon: LibraryBooks,
-        component: Typography,
-        layout: "/admin"
-    },
-    {
-        path: "/notifications",
-        name: "Notifications",
-        icon: Notifications,
-        component: NotificationsPage,
-        layout: "/admin"
-    }*/
+    }
 ];
 
 export default dashboardRoutes;

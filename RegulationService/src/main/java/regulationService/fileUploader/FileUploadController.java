@@ -2,6 +2,7 @@ package regulationService.fileUploader;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,40 +16,62 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import regulationService.storage.FileSystemStorageService;
 import regulationService.storage.StorageFileNotFoundException;
-import regulationService.storage.StorageService;
 
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+//@RestController
+//@RequestMapping("/files")
+@CrossOrigin(origins = {"http://localhost:3000"})
 @Controller
 public class FileUploadController {
 
-    private final StorageService storageService;
+    private final FileSystemStorageService storageService;
 
     @Autowired
-    public FileUploadController(StorageService storageService) {
+    public FileUploadController(FileSystemStorageService storageService) {
         this.storageService = storageService;
     }
 
     @GetMapping("/")
     public String listUploadedFiles(Model model) throws IOException {
 
-        model.addAttribute("files", storageService.loadAll().map(
+        model.addAttribute("files", storageService.loadProcessedFiles().map(
                 path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-                        "serveFile", path.getFileName().toString()).build().toString())
+                        "serveProcessedFile", path.getFileName().toString()).build().toString())
                 .collect(Collectors.toList()));
 
         return "uploadForm";
     }
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/files/root/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
 
         Resource file = storageService.loadAsResource(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveProcessedFile(@PathVariable String filename) {
+
+        Resource file = storageService.loadProcessedFileAsResource(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
+    @GetMapping(value = "/files", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> listProcessedFiles() throws IOException {
+
+        List<String> list =  storageService.loadProcessedFiles()
+                .map(path -> path.getFileName().toString())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
     @PostMapping("/")

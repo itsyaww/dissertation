@@ -10,6 +10,7 @@ import regulationService.input.RegulationDirectoryMonitor;
 import regulationService.kafka.consumer.RegulationReceiver;
 import regulationService.kafka.publisher.MessagePublisher;
 import regulationService.kafka.publisher.RegulationPublisher;
+import regulationService.storage.FileSystemStorageService;
 import regulationService.storage.StorageProperties;
 import regulationService.storage.StorageService;
 
@@ -44,7 +45,7 @@ public class ServiceApplication implements CommandLineRunner {
 	}
 
 	@Bean
-	CommandLineRunner init(StorageService storageService) {
+	CommandLineRunner init(FileSystemStorageService storageService) {
 		return (args) -> {
 			storageService.deleteAll();
 			storageService.init();
