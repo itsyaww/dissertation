@@ -5,7 +5,6 @@ import Card from "../../components/Card/Card";
 import CardHeader from "../../components/Card/CardHeader";
 import CardIcon from "../../components/Card/CardIcon";
 import CardFooter from "../../components/Card/CardFooter";
-import Danger from "../../components/Typography/Danger";
 import GridContainer from "../../components/Grid/GridContainer";
 
 // @material-ui/icons

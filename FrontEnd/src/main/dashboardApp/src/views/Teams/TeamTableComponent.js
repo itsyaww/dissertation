@@ -3,11 +3,7 @@ import React from "react";
 import GridItem from "../../components/Grid/GridItem";
 import Card from "../../components/Card/Card";
 import CardHeader from "../../components/Card/CardHeader";
-
 import GridContainer from "../../components/Grid/GridContainer";
-
-// @material-ui/icons
-import {AccountBalance, AssignmentLate, DateRange, LocalOffer, Update, NotificationImportant, Warning} from "@material-ui/icons";
 import CardBody from "../../components/Card/CardBody";
 import Table from "../../components/Table/Table";
 

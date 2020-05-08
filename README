@@ -1,0 +1,137 @@
+************************************************************************************************************************
+************************************************************************************************************************
+******* FINAL YEAR PROJECT SOURCE CODE *******
+*******     PAUL YAW OPONG FRIMPONG    *******
+*******   paulfrimpong@hotmail.co.uk   *******
+******* p.y.o.frimpong@se16.qmul.ac.uk *******
+*******           160191125            *******
+**********************************************
+
+**********************************************
+*******           DISCLAIMER           *******
+**********************************************
+
+These materials are confidential and may not be used, edited, altered, reproduced, published or distributed without the
+consent of both the author and Goldman Sachs. All rights are reserved to their full extent.
+
+**********************************************
+*******          INTRODUCTION          *******
+**********************************************
+
+This supporting evidence contains the source code to the regulatory tracking system defined in the report. This guide
+contains the necessary information to run the complete system, as well as relevant links. Prerequisite installs include:
+
+- Chrome Browser (Preferred UI tool)
+- Confluent Kafka Standalone
+- NPM
+- An IDE, preferably IntelliJ
+
+**********************************************
+*******      SOURCE CODE LOCATION      *******
+**********************************************
+
+The GitHub Repo for this project is available at:
+
+https://github.com/itsyaww/dissertation
+
+**********************************************
+*******            BACKEND             *******
+**********************************************
+
+The Backend component contains the graph database, and is responsible for exposing the datapoints through the use of
+web APIs. This component is fully deployed to an Amazon Web Service (AWS) instance, available from any host to query via
+an API or through the browser user interface 24/7. The browser user interface is available at the following domain:
+
+http://paulfrimpong-backend.eu-west-2.elasticbeanstalk.com:7474/browser/
+
+Use the credentials stored under Backend/src/resources/application.properties to log in and gain access to the database.
+To view the graph, enter the following query into the command line on the webpage:
+
+"MATCH (n) RETURN n LIMIT 40" [ENTER]
+
+The API is available at the following domain:
+
+http://backend-env.eba-tykhr4mp.eu-west-2.elasticbeanstalk.com:8080/<endpoint>
+
+Available endpoints are found under Backend/src/main/java/backend/controller. The example org chart is available under
+Backend/src/main/java/resources/org_structure.json
+
+**********************************************
+*******       REGULATION SERVICE       *******
+**********************************************
+
+The Regulation Service component contains the main regulation processing logic. This involves parsing the report file,
+filtering out data and handling communication with AWS Comprehend through the AWS API.
+
+Due to costs of implementing the Kafka messaging platform on AWS, this system must be run manually on a host.
+Connecting to Comprehend introduces additional complexities due to the requirement of user keys stored on the local host
+, enabling applications to securely connect to my personal AWS account.
+
+For this privacy reason, Comprehend cannot be started on another machine, meaning that the 'FILE UPLOAD' screen in the
+Frontend Component will not be functional if the service is started elsewhere, although the remaining screens will
+operate as expected.
+
+1) To start this locally, install Confluent Kafka Platform version 5.3.1 on your host from the following link:
+
+https://www.confluent.io/download
+
+2) Once installed, navigate to the bin directory of confluent and start the Kafka with the following command:
+
+confluent local start
+
+3) Once the messaging system and control centre is up, navigate to the UI at the following location:
+
+http://localhost:9021/clusters
+
+Click on the default cluster, and select 'Topics'. Create the 'Message' and 'Regulation' topics using the default
+settings. The RegulationService code will look for these upon startup from an IDE, and will fail to start if they
+cannot be found.
+
+4) Pending topic creation, open the FinalYearProject in an IDE of your choice (IntelliJ used for development) and
+navigate to the RegulationService Main class at RegulationService/src/main/java/regulationService/ServiceApplication.
+This project uses the Spring framework, and running the ServiceApplication will trigger Spring to start up the web
+service.
+
+From there, you will have access to the FileUpload controller, the PDF processor and Kafka publisher (Comprehend will
+fail to run if you try to upload a file). To check that the service is up, navigate to http://localhost:8090/ to see a
+simple test UI for uploading files. You will be able to upload any of the Regulation PDF files stored in /resources
+and see that they are parsed correctly, but the system will fail to communicate with Comprehend. Try uploading other
+files to monitor how the RegulationProcessor reacts!
+
+**********************************************
+*******            FRONTEND            *******
+**********************************************
+
+Far easier to run, the Frontend component simply manages the users interactions with the entire system. To start
+and view this, ensure you have node package manager (NPM) installed, available at https://www.npmjs.com/get-npm.
+
+Once installed, open your IDE and navigate to the Frontend component. Then open the terminal within your IDE, or
+alternatively navigate to the Frontend filepath in your standalone terminal/command line.
+
+Once in the Frontend directory, run the following command:
+
+npm start
+
+This will start the node.js development server on your host, and should automatically launch the program in your default
+browser. If this does not launch automatically, navigate to the following URL:
+
+http://localhost:3000/admin/dashboard
+
+A reminder: the Backend is fully deployed, and so the Frontend screens displaying database data will be able to
+communicate and display the relevant data, but the "FILE UPLOAD/INPUT" screen will not work.
+
+**********************************************
+*******            Shutdown            *******
+**********************************************
+
+To stop the Frontend, simply press CTRL+C.
+
+To stop the RegulationService, press the stop button in your IDE, and then navigate to your Confluence bin directory
+and enter the following command:
+
+confluent local stop [or destroy]
+
+Thanks for reading! I had a great time developing this, and I hope you enjoy exploring the program. :)
+
+************************************************************************************************************************
+************************************************************************************************************************
