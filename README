@@ -35,6 +35,13 @@ The GitHub Repo for this project is available at:
 https://github.com/itsyaww/dissertation
 
 **********************************************
+*******        Supporting Files        *******
+**********************************************
+
+This directory contains the raw results from the Primary Methodology, the Questionnaire Ethics Approval form as well as
+the raw training data used to generate the ML Classifier. The remaining modules are source code.
+
+**********************************************
 *******            BACKEND             *******
 **********************************************
 
